@@ -150,7 +150,7 @@ function HomePage() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {sections.map((s) => (
-              <a key={s.path} href={s.path} className="block">
+              <a key={s.path} href={s.path} className="block relative group">
                 <ServiceCard
                   title={s.title}
                   description={s.desc}
@@ -161,6 +161,10 @@ function HomePage() {
                     </div>
                   }
                 />
+                <div className="absolute top-3 right-3 flex items-center gap-1 bg-background/80 border border-border rounded-full px-2 py-0.5 text-xs text-muted-foreground">
+                  <Icon name="Lock" size={11} />
+                  <span>Платно</span>
+                </div>
               </a>
             ))}
           </div>
