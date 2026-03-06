@@ -168,6 +168,34 @@ function HomePage() {
               </a>
             ))}
           </div>
+
+          <div className="mt-12 relative p-8 md:p-10 border border-border flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="absolute -top-2 -left-2 w-6 h-6 border-t-2 border-l-2 border-primary" />
+            <div className="absolute -top-2 -right-2 w-6 h-6 border-t-2 border-r-2 border-primary" />
+            <div className="absolute -bottom-2 -left-2 w-6 h-6 border-b-2 border-l-2 border-primary" />
+            <div className="absolute -bottom-2 -right-2 w-6 h-6 border-b-2 border-r-2 border-primary" />
+
+            <div>
+              <p className="text-primary tracking-[0.2em] uppercase text-xs mb-1">Полный доступ</p>
+              <h3 className="font-serif text-2xl md:text-3xl text-foreground mb-1">Все 8 разделов навсегда</h3>
+              <p className="text-muted-foreground text-sm">Один платёж — без подписки, без ограничений по времени</p>
+            </div>
+
+            <div className="flex items-center gap-6 shrink-0">
+              <div className="text-center">
+                <p className="text-4xl font-bold text-foreground">500 ₽</p>
+                <p className="text-xs text-muted-foreground mt-1">единоразово</p>
+              </div>
+              <Link
+                to="/payment"
+                className="inline-flex items-center gap-2 bg-primary text-primary-foreground hover:bg-primary/90 transition-colors px-8 py-4 text-base font-semibold rounded-sm"
+              >
+                <Icon name="CreditCard" size={18} />
+                Купить доступ
+              </Link>
+            </div>
+          </div>
+
         </div>
       </section>
 
