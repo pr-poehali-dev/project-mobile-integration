@@ -17,9 +17,9 @@ export function CTAForm() {
   if (submitted) {
     return (
       <div className="text-center py-8">
-        <p className="font-serif text-2xl text-primary mb-2">Благодарим вас</p>
+        <p className="font-serif text-2xl text-primary mb-2">Отлично, ты в деле!</p>
         <p className="text-muted-foreground">
-          Ваша заявка получена. Мы свяжемся с вами в ближайшее время.
+          Гайд «Первые 7 дней с Python» уже летит на твою почту. Добро пожаловать в мир кода!
         </p>
       </div>
     );
@@ -29,7 +29,7 @@ export function CTAForm() {
     <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
       <Input
         type="email"
-        placeholder="Введите ваш email"
+        placeholder="Твой email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         required
@@ -39,7 +39,7 @@ export function CTAForm() {
         type="submit"
         className="bg-primary text-primary-foreground hover:bg-primary/90 font-medium tracking-wider uppercase text-sm px-8 transition-all duration-300"
       >
-        Отправить заявку
+        Начать учиться
       </Button>
     </form>
   );

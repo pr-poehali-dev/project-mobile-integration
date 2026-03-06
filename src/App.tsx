@@ -2,6 +2,7 @@ import { ArtDecoSunburst } from "@/components/ArtDecoSunburst";
 import { ArtDecoDivider } from "@/components/ArtDecoDivider";
 import { ServiceCard } from "@/components/ServiceCard";
 import { CTAForm } from "@/components/CTAForm";
+import Icon from "@/components/ui/icon";
 
 function App() {
   return (
@@ -11,7 +12,6 @@ function App() {
         <ArtDecoSunburst />
 
         <div className="relative z-10 text-center max-w-4xl mx-auto">
-          {/* Decorative top element */}
           <div className="flex justify-center mb-8">
             <div className="flex items-center gap-4">
               <div className="w-16 h-px bg-primary" />
@@ -20,17 +20,16 @@ function App() {
             </div>
           </div>
 
-          <p className="text-primary tracking-[0.3em] uppercase text-sm mb-6">С 2024 года</p>
+          <p className="text-primary tracking-[0.3em] uppercase text-sm mb-6">Твой первый шаг в мир кода</p>
 
           <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl text-foreground mb-6 leading-tight">
-            <span className="text-gold-gradient">Золотой</span>Капитал
+            <span className="text-gold-gradient">Python</span>Старт
           </h1>
 
           <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed mb-12">
-            Эксклюзивный клуб для взыскательных инвесторов, открывающий доступ к уникальным возможностям в альтернативных активах.
+            Информационный портал для тех, кто делает первые шаги в программировании. Чёткий путь от «Hello, World!» до реальных проектов.
           </p>
 
-          {/* Decorative bottom element */}
           <div className="flex justify-center">
             <div className="flex flex-col items-center gap-2">
               <div className="w-px h-16 bg-gradient-to-b from-transparent via-primary to-primary" />
@@ -39,7 +38,6 @@ function App() {
           </div>
         </div>
 
-        {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-primary">
             <path
@@ -60,17 +58,17 @@ function App() {
 
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <div>
-              <p className="text-primary tracking-[0.2em] uppercase text-sm mb-4">Наша философия</p>
+              <p className="text-primary tracking-[0.2em] uppercase text-sm mb-4">Наш подход</p>
               <h2 className="font-serif text-4xl md:text-5xl text-foreground mb-6 leading-tight text-balance">
-                Где видение встречает возможности
+                Учись так, как это работает в реальной жизни
               </h2>
             </div>
             <div className="space-y-6">
               <p className="text-muted-foreground leading-relaxed text-lg">
-                В мире обычных инвестиций мы ищем исключительное. ЗолотойКапитал объединяет избранный круг дальновидных инвесторов, которые понимают, что истинное богатство строится через доступ к возможностям, недоступным массовому рынку.
+                Никакой воды и академической скуки. PythonСтарт — это структурированный путь для новичков: от самых азов синтаксиса до написания первых рабочих программ и автоматизации повседневных задач.
               </p>
               <p className="text-muted-foreground leading-relaxed text-lg">
-                От музейного изобразительного искусства до винтажных автомобилей высшего класса, от редких коллекционных предметов до новых альтернативных активов — мы отбираем, проверяем и представляем только исключительное.
+                Каждый раздел построен по принципу «теория → пример → практика». Ты не просто читаешь код — ты понимаешь, зачем он нужен и как применить его прямо сейчас.
               </p>
             </div>
           </div>
@@ -81,42 +79,30 @@ function App() {
       <section className="py-24 px-6 bg-card/50">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <p className="text-primary tracking-[0.2em] uppercase text-sm mb-4">Наши направления</p>
-            <h2 className="font-serif text-4xl md:text-5xl text-foreground text-balance">Кураторское совершенство</h2>
+            <p className="text-primary tracking-[0.2em] uppercase text-sm mb-4">Разделы портала</p>
+            <h2 className="font-serif text-4xl md:text-5xl text-foreground text-balance">Твой путь в Python</h2>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <ServiceCard
-              title="Изобразительное искусство"
-              description="Доступ к работам музейного качества от признанных мастеров и современных визионеров, отобранных экспертами мирового уровня."
-              icon={
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-12 h-12">
-                  <rect x="3" y="3" width="18" height="18" rx="2" />
-                  <circle cx="8.5" cy="8.5" r="1.5" />
-                  <path d="M21 15l-5-5L5 21" />
-                </svg>
-              }
+              title="Основы Python"
+              description="Переменные, типы данных, условия, циклы и функции. Всё, что нужно, чтобы уверенно стартовать с нуля."
+              icon={<Icon name="Code" size={48} />}
             />
             <ServiceCard
-              title="Редкие коллекции"
-              description="От винтажных часов до исторических реликвий — каждый предмет с подтвержденной подлинностью и провенансом высочайшего стандарта."
-              icon={
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-12 h-12">
-                  <circle cx="12" cy="12" r="9" />
-                  <path d="M12 6v6l4 2" />
-                </svg>
-              }
+              title="Структуры данных"
+              description="Списки, словари, кортежи и множества. Научись хранить и обрабатывать данные правильно и эффективно."
+              icon={<Icon name="Database" size={48} />}
             />
             <ServiceCard
-              title="Классические автомобили"
-              description="Исключительные автомобили исторической значимости, каждый из которых представляет вершину автомобильного искусства и инженерии."
-              icon={
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-12 h-12">
-                  <path d="M5 17h14M6 9l2-4h8l2 4M4 14h16v3H4z" />
-                  <circle cx="7" cy="17" r="2" />
-                  <circle cx="17" cy="17" r="2" />
-                </svg>
-              }
+              title="Веб-разработка"
+              description="Создай свой первый сайт или API на Python. Flask и FastAPI — без лишней сложности, с понятными примерами."
+              icon={<Icon name="Globe" size={48} />}
+            />
+            <ServiceCard
+              title="Автоматизация"
+              description="Пусть Python работает за тебя. Скрипты для файлов, таблиц, браузера и рутинных задач — реальная польза с первых строк."
+              icon={<Icon name="Zap" size={48} />}
             />
           </div>
         </div>
@@ -128,18 +114,17 @@ function App() {
           <ArtDecoDivider variant="fan" />
 
           <div className="relative text-center py-12">
-            {/* Quote decorations */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 text-primary/20 font-serif text-9xl leading-none">
               &ldquo;
             </div>
 
             <blockquote className="relative z-10">
               <p className="font-serif text-2xl md:text-3xl text-foreground leading-relaxed italic mb-8">
-                Членство в ЗолотойКапитал изменило мой подход к альтернативным инвестициям. Качество возможностей и уровень сервиса просто несравнимы.
+                Я никогда не думал, что смогу написать код. После первого раздела PythonСтарт я уже автоматизировал свои рабочие таблицы и сэкономил 3 часа в неделю.
               </p>
               <footer className="text-muted-foreground">
-                <span className="text-primary">—</span> Уважаемый член клуба,{" "}
-                <span className="text-primary">Москва</span>
+                <span className="text-primary">—</span> Алексей, менеджер проектов,{" "}
+                <span className="text-primary">Санкт-Петербург</span>
               </footer>
             </blockquote>
           </div>
@@ -155,15 +140,14 @@ function App() {
         <div className="max-w-3xl mx-auto relative z-10">
           <div className="text-center mb-12">
             <ArtDecoDivider variant="chevron" />
-            <p className="text-primary tracking-[0.2em] uppercase text-sm mb-4">Начните свой путь</p>
-            <h2 className="font-serif text-4xl md:text-5xl text-foreground mb-6 text-balance">Запросить приглашение</h2>
+            <p className="text-primary tracking-[0.2em] uppercase text-sm mb-4">Начни сегодня</p>
+            <h2 className="font-serif text-4xl md:text-5xl text-foreground mb-6 text-balance">Получи доступ к материалам</h2>
             <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-              Членство предоставляется только по приглашению. Оставьте заявку, и наш представитель свяжется с вами для обсуждения возможного сотрудничества.
+              Оставь email — и мы пришлём тебе стартовый гайд «Первые 7 дней с Python» и сообщим о новых уроках первым.
             </p>
           </div>
 
           <div className="relative p-8 md:p-12 border border-border">
-            {/* Decorative frame corners */}
             <div className="absolute -top-2 -left-2 w-8 h-8 border-t-2 border-l-2 border-primary" />
             <div className="absolute -top-2 -right-2 w-8 h-8 border-t-2 border-r-2 border-primary" />
             <div className="absolute -bottom-2 -left-2 w-8 h-8 border-b-2 border-l-2 border-primary" />
@@ -180,18 +164,20 @@ function App() {
           <div className="flex flex-col items-center gap-6">
             <div className="flex items-center gap-4">
               <div className="w-12 h-px bg-primary" />
-              <span className="font-serif text-xl text-foreground">ЗолотойКапитал</span>
+              <span className="font-serif text-xl text-foreground">PythonСтарт</span>
               <div className="w-12 h-px bg-primary" />
             </div>
 
-            <p className="text-muted-foreground text-sm text-center">
-              &copy; {new Date().getFullYear()} ЗолотойКапитал. Все права защищены. Членство только по приглашению.
+            <p className="text-muted-foreground text-sm text-center max-w-md">
+              Портал для тех, кто начинает программировать на Python. Честно, понятно, с реальными примерами.
             </p>
 
-            <div className="flex items-center gap-1">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <div key={i} className="w-1 h-1 bg-primary" style={{ opacity: 1 - i * 0.15 }} />
-              ))}
+            <div className="flex items-center gap-2">
+              <div className="w-1 h-1 rounded-full bg-primary" />
+              <p className="text-muted-foreground text-xs tracking-widest uppercase">
+                © 2024 PythonСтарт. Все права защищены.
+              </p>
+              <div className="w-1 h-1 rounded-full bg-primary" />
             </div>
           </div>
         </div>
