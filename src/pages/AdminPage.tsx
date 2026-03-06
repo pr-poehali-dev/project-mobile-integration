@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import Icon from "@/components/ui/icon";
 
 const ADMIN_URL = "https://functions.poehali.dev/5494a60d-ccbd-4046-84fe-f0f5f248d5ef";
+const DELETE_URL = "https://functions.poehali.dev/21c26996-3ebc-4b57-b0f7-4ed9222e57bb";
 
 interface Subscriber {
   id: number;
@@ -12,10 +13,17 @@ interface Subscriber {
   created_at: string;
 }
 
+async function fetchSubscribers(secret: string) {
+  const res = await fetch(ADMIN_URL, { headers: { "X-Admin-Secret": secret } });
+  const data = JSON.parse(await res.json());
+  return data as { subscribers: Subscriber[]; total: number };
+}
+
 export default function AdminPage() {
   const [password, setPassword] = useState("");
   const [authed, setAuthed] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [deletingId, setDeletingId] = useState<number | null>(null);
   const [error, setError] = useState("");
   const [subscribers, setSubscribers] = useState<Subscriber[]>([]);
   const [total, setTotal] = useState(0);
@@ -26,13 +34,10 @@ export default function AdminPage() {
     setLoading(true);
     setError("");
 
-    const res = await fetch(ADMIN_URL, {
-      headers: { "X-Admin-Secret": password },
-    });
-
-    setLoading(false);
+    const res = await fetch(ADMIN_URL, { headers: { "X-Admin-Secret": password } });
 
     if (res.status === 401) {
+      setLoading(false);
       setError("Неверный пароль");
       return;
     }
@@ -42,17 +47,31 @@ export default function AdminPage() {
     setTotal(data.total);
     setSecret(password);
     setAuthed(true);
+    setLoading(false);
   };
 
   const handleRefresh = async () => {
     setLoading(true);
-    const res = await fetch(ADMIN_URL, {
-      headers: { "X-Admin-Secret": secret },
-    });
-    const data = JSON.parse(await res.json());
+    const data = await fetchSubscribers(secret);
     setSubscribers(data.subscribers);
     setTotal(data.total);
     setLoading(false);
+  };
+
+  const handleDelete = async (id: number) => {
+    if (!confirm("Удалить этого подписчика?")) return;
+    setDeletingId(id);
+
+    await fetch(DELETE_URL, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json", "X-Admin-Secret": secret },
+      body: JSON.stringify({ id }),
+    });
+
+    const data = await fetchSubscribers(secret);
+    setSubscribers(data.subscribers);
+    setTotal(data.total);
+    setDeletingId(null);
   };
 
   if (!authed) {
@@ -138,6 +157,7 @@ export default function AdminPage() {
                     <th className="text-left px-6 py-4 text-primary text-xs uppercase tracking-widest font-normal">#</th>
                     <th className="text-left px-6 py-4 text-primary text-xs uppercase tracking-widest font-normal">Email</th>
                     <th className="text-left px-6 py-4 text-primary text-xs uppercase tracking-widest font-normal">Дата</th>
+                    <th className="px-6 py-4" />
                   </tr>
                 </thead>
                 <tbody>
@@ -146,6 +166,19 @@ export default function AdminPage() {
                       <td className="px-6 py-4 text-muted-foreground text-sm font-mono">{i + 1}</td>
                       <td className="px-6 py-4 text-foreground">{sub.email}</td>
                       <td className="px-6 py-4 text-muted-foreground text-sm">{sub.created_at}</td>
+                      <td className="px-4 py-4 text-right">
+                        <button
+                          onClick={() => handleDelete(sub.id)}
+                          disabled={deletingId === sub.id}
+                          className="text-muted-foreground hover:text-red-400 transition-colors disabled:opacity-30"
+                          title="Удалить"
+                        >
+                          {deletingId === sub.id
+                            ? <Icon name="Loader" size={16} className="animate-spin" />
+                            : <Icon name="Trash2" size={16} />
+                          }
+                        </button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>

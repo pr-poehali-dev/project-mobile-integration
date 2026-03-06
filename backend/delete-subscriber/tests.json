@@ -1,0 +1,12 @@
+{
+  "tests": [
+    {
+      "name": "Delete without secret",
+      "method": "DELETE",
+      "path": "/",
+      "body": {"id": 999},
+      "expectedStatus": 401,
+      "bodyMatcher": "partial"
+    }
+  ]
+}

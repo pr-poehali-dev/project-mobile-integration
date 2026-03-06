@@ -1,4 +1,5 @@
 {
+  "delete-subscriber": "https://functions.poehali.dev/21c26996-3ebc-4b57-b0f7-4ed9222e57bb",
   "admin-subscribers": "https://functions.poehali.dev/5494a60d-ccbd-4046-84fe-f0f5f248d5ef",
   "subscribe": "https://functions.poehali.dev/d7b19161-4f62-4489-a769-b693c50413ba"
 }
