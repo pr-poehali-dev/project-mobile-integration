@@ -1,0 +1,11 @@
+{
+  "tests": [
+    {
+      "name": "Access without secret",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 401,
+      "bodyMatcher": "partial"
+    }
+  ]
+}

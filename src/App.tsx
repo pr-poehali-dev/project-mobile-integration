@@ -14,6 +14,7 @@ import WebPage from "@/pages/WebPage";
 import BazyDannyhPage from "@/pages/BazyDannyhPage";
 import AvtomatizaciyaPage from "@/pages/AvtomatizaciyaPage";
 import ProektyPage from "@/pages/ProektyPage";
+import AdminPage from "@/pages/AdminPage";
 
 const sections = [
   { title: "Основы Python", icon: "Code", desc: "Переменные, условия, циклы и функции. Всё, что нужно, чтобы уверенно стартовать с нуля.", path: "/osnovy", num: "01" },
@@ -210,6 +211,7 @@ function App() {
       <Route path="/bazy-dannyh" element={<BazyDannyhPage />} />
       <Route path="/avtomatizaciya" element={<AvtomatizaciyaPage />} />
       <Route path="/proekty" element={<ProektyPage />} />
+      <Route path="/admin" element={<AdminPage />} />
     </Routes>
   );
 }
