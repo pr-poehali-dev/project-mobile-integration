@@ -22,7 +22,10 @@ def send_welcome_email(to_email: str):
     <body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
         <h2 style="color: #2563eb;">Привет! Ты в деле 🚀</h2>
         <p>Спасибо за подписку! Мы рады видеть тебя в нашем сообществе.</p>
-        <p>Твой гайд <strong>«Первые 7 дней с Python»</strong> уже готов — скоро пришлём ссылку.</p>
+        <p>Твой гайд <strong>«Первые 7 дней с Python»</strong> уже ждёт тебя:</p>
+        <p style="text-align: center; margin: 24px 0;">
+            <a href="https://python-start.ru" style="background: #2563eb; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: bold;">Получить гайд →</a>
+        </p>
         <p style="color: #6b7280; font-size: 14px;">Если письмо попало в спам — добавь нас в контакты.</p>
     </body>
     </html>
