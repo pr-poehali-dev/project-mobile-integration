@@ -1,12 +1,36 @@
+import { Routes, Route } from "react-router-dom";
 import { ArtDecoSunburst } from "@/components/ArtDecoSunburst";
 import { ArtDecoDivider } from "@/components/ArtDecoDivider";
 import { ServiceCard } from "@/components/ServiceCard";
 import { CTAForm } from "@/components/CTAForm";
+import { Navbar } from "@/components/Navbar";
 import Icon from "@/components/ui/icon";
 
-function App() {
+import OsnovyPage from "@/pages/OsnovyPage";
+import StruktуryPage from "@/pages/StruktуryPage";
+import FunkciiPage from "@/pages/FunkciiPage";
+import OopPage from "@/pages/OopPage";
+import WebPage from "@/pages/WebPage";
+import BazyDannyhPage from "@/pages/BazyDannyhPage";
+import AvtomatizaciyaPage from "@/pages/AvtomatizaciyaPage";
+import ProektyPage from "@/pages/ProektyPage";
+
+const sections = [
+  { title: "Основы Python", icon: "Code", desc: "Переменные, условия, циклы и функции. Всё, что нужно, чтобы уверенно стартовать с нуля.", path: "/osnovy", num: "01" },
+  { title: "Структуры данных", icon: "Database", desc: "Списки, словари, кортежи и множества. Научись хранить и обрабатывать данные правильно.", path: "/struktury", num: "02" },
+  { title: "Функции", icon: "Code2", desc: "def, аргументы, лямбды и область видимости. Строительные блоки любой программы.", path: "/funkcii", num: "03" },
+  { title: "ООП", icon: "Boxes", desc: "Классы, объекты, наследование и инкапсуляция. Пиши код как профессионал.", path: "/oop", num: "04" },
+  { title: "Веб-разработка", icon: "Globe", desc: "Flask и FastAPI — создай свой первый сайт или API без лишней сложности.", path: "/web", num: "05" },
+  { title: "Базы данных", icon: "Server", desc: "SQLite, PostgreSQL, SQLAlchemy и Pandas. Хранение и анализ данных на практике.", path: "/bazy-dannyh", num: "06" },
+  { title: "Автоматизация", icon: "Zap", desc: "Файлы, Excel, письма, парсинг и телеграм-боты. Пусть Python работает за тебя.", path: "/avtomatizaciya", num: "07" },
+  { title: "Реальные проекты", icon: "Rocket", desc: "6 проектов для портфолио: от конвертера валют до полноценного REST API.", path: "/proekty", num: "08" },
+];
+
+function HomePage() {
   return (
     <main className="min-h-screen bg-background dark">
+      <Navbar />
+
       {/* Hero Section */}
       <section className="relative min-h-screen flex flex-col items-center justify-center px-6 overflow-hidden">
         <ArtDecoSunburst />
@@ -40,13 +64,7 @@ function App() {
 
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-primary">
-            <path
-              d="M12 5v14M5 12l7 7 7-7"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
+            <path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </div>
       </section>
@@ -75,7 +93,7 @@ function App() {
         </div>
       </section>
 
-      {/* Services Section */}
+      {/* Sections Grid */}
       <section className="py-24 px-6 bg-card/50">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
@@ -83,27 +101,21 @@ function App() {
             <h2 className="font-serif text-4xl md:text-5xl text-foreground text-balance">Твой путь в Python</h2>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <ServiceCard
-              title="Основы Python"
-              description="Переменные, типы данных, условия, циклы и функции. Всё, что нужно, чтобы уверенно стартовать с нуля."
-              icon={<Icon name="Code" size={48} />}
-            />
-            <ServiceCard
-              title="Структуры данных"
-              description="Списки, словари, кортежи и множества. Научись хранить и обрабатывать данные правильно и эффективно."
-              icon={<Icon name="Database" size={48} />}
-            />
-            <ServiceCard
-              title="Веб-разработка"
-              description="Создай свой первый сайт или API на Python. Flask и FastAPI — без лишней сложности, с понятными примерами."
-              icon={<Icon name="Globe" size={48} />}
-            />
-            <ServiceCard
-              title="Автоматизация"
-              description="Пусть Python работает за тебя. Скрипты для файлов, таблиц, браузера и рутинных задач — реальная польза с первых строк."
-              icon={<Icon name="Zap" size={48} />}
-            />
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {sections.map((s) => (
+              <a key={s.path} href={s.path} className="block">
+                <ServiceCard
+                  title={s.title}
+                  description={s.desc}
+                  icon={
+                    <div className="relative">
+                      <Icon name={s.icon} size={44} />
+                      <span className="absolute -top-3 -right-5 text-xs text-primary/40 font-mono">{s.num}</span>
+                    </div>
+                  }
+                />
+              </a>
+            ))}
           </div>
         </div>
       </section>
@@ -183,6 +195,22 @@ function App() {
         </div>
       </footer>
     </main>
+  );
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/osnovy" element={<OsnovyPage />} />
+      <Route path="/struktury" element={<StruktуryPage />} />
+      <Route path="/funkcii" element={<FunkciiPage />} />
+      <Route path="/oop" element={<OopPage />} />
+      <Route path="/web" element={<WebPage />} />
+      <Route path="/bazy-dannyh" element={<BazyDannyhPage />} />
+      <Route path="/avtomatizaciya" element={<AvtomatizaciyaPage />} />
+      <Route path="/proekty" element={<ProektyPage />} />
+    </Routes>
   );
 }
 
