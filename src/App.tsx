@@ -21,6 +21,7 @@ import AdminPage from "@/pages/AdminPage";
 import PaymentPage from "@/pages/PaymentPage";
 import SuccessPage from "@/pages/SuccessPage";
 import { Link } from "react-router-dom";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
 
 const sections = [
   { title: "Основы Python", icon: "Code", desc: "Переменные, условия, циклы и функции. Всё, что нужно, чтобы уверенно стартовать с нуля.", path: "/osnovy", num: "01" },
@@ -248,14 +249,14 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/osnovy" element={<OsnovyPage />} />
-      <Route path="/struktury" element={<StruktуryPage />} />
-      <Route path="/funkcii" element={<FunkciiPage />} />
-      <Route path="/oop" element={<OopPage />} />
-      <Route path="/web" element={<WebPage />} />
-      <Route path="/bazy-dannyh" element={<BazyDannyhPage />} />
-      <Route path="/avtomatizaciya" element={<AvtomatizaciyaPage />} />
-      <Route path="/proekty" element={<ProektyPage />} />
+      <Route path="/osnovy" element={<ProtectedRoute><OsnovyPage /></ProtectedRoute>} />
+      <Route path="/struktury" element={<ProtectedRoute><StruktуryPage /></ProtectedRoute>} />
+      <Route path="/funkcii" element={<ProtectedRoute><FunkciiPage /></ProtectedRoute>} />
+      <Route path="/oop" element={<ProtectedRoute><OopPage /></ProtectedRoute>} />
+      <Route path="/web" element={<ProtectedRoute><WebPage /></ProtectedRoute>} />
+      <Route path="/bazy-dannyh" element={<ProtectedRoute><BazyDannyhPage /></ProtectedRoute>} />
+      <Route path="/avtomatizaciya" element={<ProtectedRoute><AvtomatizaciyaPage /></ProtectedRoute>} />
+      <Route path="/proekty" element={<ProtectedRoute><ProektyPage /></ProtectedRoute>} />
       <Route path="/admin" element={<AdminPage />} />
       <Route path="/payment" element={<PaymentPage />} />
       <Route path="/success" element={<SuccessPage />} />

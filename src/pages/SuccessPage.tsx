@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
@@ -5,6 +6,10 @@ import Icon from "@/components/ui/icon";
 import { ArtDecoSunburst } from "@/components/ArtDecoSunburst";
 
 export default function SuccessPage() {
+  useEffect(() => {
+    localStorage.setItem("python_start_paid", "true");
+  }, []);
+
   return (
     <div className="min-h-screen bg-background dark">
       <Navbar />
