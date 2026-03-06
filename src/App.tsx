@@ -1,10 +1,13 @@
 import { Routes, Route } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { ArtDecoSunburst } from "@/components/ArtDecoSunburst";
 import { ArtDecoDivider } from "@/components/ArtDecoDivider";
 import { ServiceCard } from "@/components/ServiceCard";
 import { CTAForm } from "@/components/CTAForm";
 import { Navbar } from "@/components/Navbar";
 import Icon from "@/components/ui/icon";
+
+const SUBSCRIBERS_COUNT_URL = "https://functions.poehali.dev/2996483e-8588-416c-bee7-3462954a0fff";
 
 import OsnovyPage from "@/pages/OsnovyPage";
 import StruktуryPage from "@/pages/StruktуryPage";
@@ -28,6 +31,15 @@ const sections = [
 ];
 
 function HomePage() {
+  const [count, setCount] = useState<number | null>(null);
+
+  useEffect(() => {
+    fetch(SUBSCRIBERS_COUNT_URL)
+      .then((r) => r.json())
+      .then((data) => setCount(data.count))
+      .catch(() => {});
+  }, []);
+
   return (
     <main className="min-h-screen bg-background dark">
       <Navbar />
@@ -62,6 +74,19 @@ function HomePage() {
             </div>
           </div>
         </div>
+
+        {count !== null && (
+          <div className="absolute bottom-20 left-1/2 -translate-x-1/2 flex items-center gap-3 text-sm text-muted-foreground">
+            <div className="flex -space-x-1">
+              {[...Array(3)].map((_, i) => (
+                <div key={i} className="w-6 h-6 rounded-full bg-primary/20 border border-primary/40" />
+              ))}
+            </div>
+            <span>
+              <span className="text-foreground font-semibold">{count.toLocaleString("ru-RU")}</span> человек уже учатся
+            </span>
+          </div>
+        )}
 
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-primary">
