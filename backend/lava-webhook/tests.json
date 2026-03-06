@@ -1,0 +1,17 @@
+{
+  "tests": [
+    {
+      "name": "OPTIONS preflight",
+      "method": "OPTIONS",
+      "path": "/",
+      "expectedStatus": 200
+    },
+    {
+      "name": "Webhook non-success status skipped",
+      "method": "POST",
+      "path": "/",
+      "body": {"status": "pending", "email": "test@test.com", "orderId": "123"},
+      "expectedStatus": 200
+    }
+  ]
+}

@@ -18,6 +18,9 @@ import BazyDannyhPage from "@/pages/BazyDannyhPage";
 import AvtomatizaciyaPage from "@/pages/AvtomatizaciyaPage";
 import ProektyPage from "@/pages/ProektyPage";
 import AdminPage from "@/pages/AdminPage";
+import PaymentPage from "@/pages/PaymentPage";
+import SuccessPage from "@/pages/SuccessPage";
+import { Link } from "react-router-dom";
 
 const sections = [
   { title: "Основы Python", icon: "Code", desc: "Переменные, условия, циклы и функции. Всё, что нужно, чтобы уверенно стартовать с нуля.", path: "/osnovy", num: "01" },
@@ -63,13 +66,30 @@ function HomePage() {
             <span className="text-gold-gradient">Python</span>Старт
           </h1>
 
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed mb-12">
+          <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed mb-10">
             Информационный портал для тех, кто делает первые шаги в программировании. Чёткий путь от «Hello, World!» до реальных проектов.
           </p>
 
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
+            <Link
+              to="/payment"
+              className="inline-flex items-center gap-2 bg-primary text-primary-foreground hover:bg-primary/90 transition-colors px-8 py-4 text-base font-semibold rounded-sm"
+            >
+              <Icon name="CreditCard" size={18} />
+              Купить курс — 500 ₽
+            </Link>
+            <a
+              href="#sections"
+              className="inline-flex items-center gap-2 border border-border text-muted-foreground hover:text-foreground hover:border-primary transition-colors px-8 py-4 text-base rounded-sm"
+            >
+              Посмотреть разделы
+              <Icon name="ChevronDown" size={18} />
+            </a>
+          </div>
+
           <div className="flex justify-center">
             <div className="flex flex-col items-center gap-2">
-              <div className="w-px h-16 bg-gradient-to-b from-transparent via-primary to-primary" />
+              <div className="w-px h-12 bg-gradient-to-b from-transparent via-primary to-primary" />
               <div className="w-2 h-2 rotate-45 bg-primary" />
             </div>
           </div>
@@ -120,7 +140,7 @@ function HomePage() {
       </section>
 
       {/* Sections Grid */}
-      <section className="py-24 px-6 bg-card/50">
+      <section id="sections" className="py-24 px-6 bg-card/50">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <p className="text-primary tracking-[0.2em] uppercase text-sm mb-4">Разделы портала</p>
@@ -237,6 +257,8 @@ function App() {
       <Route path="/avtomatizaciya" element={<AvtomatizaciyaPage />} />
       <Route path="/proekty" element={<ProektyPage />} />
       <Route path="/admin" element={<AdminPage />} />
+      <Route path="/payment" element={<PaymentPage />} />
+      <Route path="/success" element={<SuccessPage />} />
     </Routes>
   );
 }
