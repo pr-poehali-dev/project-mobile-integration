@@ -2,6 +2,120 @@ import { Navbar } from "@/components/Navbar";
 import { ArtDecoDivider } from "@/components/ArtDecoDivider";
 import Icon from "@/components/ui/icon";
 
+function ProgramStructureChart() {
+  const layers = [
+    {
+      label: "Программа",
+      sublabel: "файл .py",
+      color: "border-primary bg-primary/10 text-primary",
+      dot: "bg-primary",
+      desc: "Весь код целиком",
+      width: "w-full",
+    },
+    {
+      label: "Функции",
+      sublabel: "def greet():",
+      color: "border-primary/70 bg-primary/7 text-primary/90",
+      dot: "bg-primary/70",
+      desc: "Именованные блоки инструкций",
+      width: "w-11/12",
+    },
+    {
+      label: "Инструкции",
+      sublabel: "name = \"Алексей\"",
+      color: "border-primary/50 bg-primary/5 text-primary/80",
+      dot: "bg-primary/50",
+      desc: "Отдельные команды, строка за строкой",
+      width: "w-10/12",
+    },
+    {
+      label: "Выражения",
+      sublabel: "2 + 2 / \"текст\" / name",
+      color: "border-primary/35 bg-primary/3 text-primary/70",
+      dot: "bg-primary/35",
+      desc: "Части инструкций, которые вычисляются",
+      width: "w-9/12",
+    },
+    {
+      label: "Значения",
+      sublabel: "25 / \"Привет\" / True",
+      color: "border-primary/20 bg-transparent text-primary/60",
+      dot: "bg-primary/20",
+      desc: "Числа, строки, булевы — минимальные единицы данных",
+      width: "w-8/12",
+    },
+  ];
+
+  return (
+    <div className="mb-6">
+      <p className="text-xs text-primary/70 uppercase tracking-widest mb-4">Иерархия структуры программы</p>
+      <div className="flex flex-col items-center gap-2">
+        {layers.map((layer, i) => (
+          <div key={layer.label} className={`${layer.width} transition-all`}>
+            <div className={`border rounded-sm px-4 py-3 flex items-center justify-between gap-4 ${layer.color}`}>
+              <div className="flex items-center gap-3">
+                <div className={`w-2 h-2 rounded-full shrink-0 ${layer.dot}`} />
+                <div>
+                  <span className="font-semibold text-sm">{layer.label}</span>
+                  <span className="text-xs opacity-60 ml-2 font-mono">{layer.sublabel}</span>
+                </div>
+              </div>
+              <span className="text-xs opacity-60 hidden sm:block text-right shrink-0">{layer.desc}</span>
+            </div>
+            {i < layers.length - 1 && (
+              <div className="flex justify-center">
+                <div className="w-px h-3 bg-primary/20" />
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+      <p className="text-xs text-muted-foreground mt-3 flex items-center gap-1">
+        <Icon name="Info" size={12} />
+        Каждый уровень содержит элементы уровня ниже. Интерпретатор обходит дерево сверху вниз.
+      </p>
+    </div>
+  );
+}
+
+function InterpreterFlowChart() {
+  const steps = [
+    { icon: "FileText", label: "Исходный код", sub: "файл .py на диске", color: "text-primary border-primary/40 bg-primary/5" },
+    { icon: "Cpu", label: "Интерпретатор Python", sub: "читает код строку за строкой", color: "text-primary border-primary/60 bg-primary/10" },
+    { icon: "Zap", label: "Байт-код", sub: "промежуточное представление", color: "text-primary/80 border-primary/40 bg-primary/5" },
+    { icon: "Monitor", label: "Результат", sub: "вывод на экран / данные", color: "text-primary border-primary/60 bg-primary/10" },
+  ];
+
+  return (
+    <div className="mb-6">
+      <p className="text-xs text-primary/70 uppercase tracking-widest mb-4">Путь кода от файла до результата</p>
+      <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-0">
+        {steps.map((step, i) => (
+          <div key={step.label} className="flex sm:flex-row flex-col items-center w-full sm:w-auto sm:flex-1">
+            <div className={`border rounded-sm p-3 flex flex-col items-center gap-1 text-center w-full sm:w-auto ${step.color}`}>
+              <Icon name={step.icon} size={20} />
+              <span className="text-xs font-semibold leading-tight">{step.label}</span>
+              <span className="text-xs opacity-60 leading-tight">{step.sub}</span>
+            </div>
+            {i < steps.length - 1 && (
+              <div className="flex sm:flex-row flex-col items-center shrink-0">
+                <div className="w-px h-4 sm:w-6 sm:h-px bg-primary/30" />
+                <Icon name="ChevronDown" size={12} className="text-primary/40 sm:hidden" />
+                <Icon name="ChevronRight" size={12} className="text-primary/40 hidden sm:block" />
+                <div className="w-px h-4 sm:w-6 sm:h-px bg-primary/30" />
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+      <p className="text-xs text-muted-foreground mt-3 flex items-center gap-1">
+        <Icon name="Info" size={12} />
+        Python компилирует код в байт-код автоматически — разработчику этот этап не виден.
+      </p>
+    </div>
+  );
+}
+
 interface Step {
   label: string;
   text: string;
@@ -14,6 +128,7 @@ interface Topic {
   steps?: Step[];
   link?: string;
   image?: { src: string; caption: string };
+  visual?: "structure" | "interpreter";
   blocks: { label: string; code: string; comment?: string }[];
 }
 
@@ -28,6 +143,7 @@ const topics: Topic[] = [
       { label: "Шаг 2", text: "После установки нажми Win+R, введи cmd и нажми Enter. Откроется командная строка — текстовый интерфейс операционной системы, через который можно отправлять команды напрямую." },
       { label: "Шаг 3", text: "Введи команду проверки версии и нажми Enter. Если система вывела номер версии — интерпретатор Python успешно установлен и зарегистрирован в системе." },
     ],
+    visual: "interpreter",
     blocks: [
       {
         label: "Команда для проверки (вводить в командной строке cmd):",
@@ -67,16 +183,8 @@ const topics: Topic[] = [
         text: "Функция — это именованный блок инструкций, который можно вызвать по имени. Функции позволяют не дублировать код и разбивать программу на логические части.",
       },
     ],
-    blocks: [
-      {
-        label: "Иерархия: от большого к малому",
-        code: `Программа (.py файл)
- └── Инструкции (строки кода)
-      └── Выражения (вычисляемые части)
-           └── Значения (числа, текст, True/False)`,
-        comment: "Функции — это именованные группы инструкций, которые можно вызывать многократно",
-      },
-    ],
+    visual: "structure",
+    blocks: [],
   },
   {
     title: "Где писать код",
@@ -314,6 +422,9 @@ export default function OsnovyPage() {
                     ))}
                   </div>
                 )}
+
+                {topic.visual === "structure" && <ProgramStructureChart />}
+                {topic.visual === "interpreter" && <InterpreterFlowChart />}
 
                 {topic.image && (
                   <div className="mb-6">
