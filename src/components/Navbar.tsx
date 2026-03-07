@@ -42,6 +42,14 @@ export function Navbar() {
           ))}
         </nav>
 
+        <Link
+          to="/login"
+          className="hidden lg:inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground border border-border hover:border-primary transition-colors px-3 py-1.5 rounded-sm"
+        >
+          <Icon name="LogIn" size={14} />
+          Войти
+        </Link>
+
         {/* Mobile burger */}
         <button
           className="lg:hidden text-muted-foreground hover:text-foreground"
@@ -66,6 +74,14 @@ export function Navbar() {
               {s.label}
             </Link>
           ))}
+          <Link
+            to="/login"
+            onClick={() => setOpen(false)}
+            className="py-2 text-sm text-primary flex items-center gap-1.5"
+          >
+            <Icon name="LogIn" size={14} />
+            Войти
+          </Link>
         </div>
       )}
     </header>
