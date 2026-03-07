@@ -58,7 +58,7 @@ export function CTAForm() {
         disabled={loading}
         className="bg-primary text-primary-foreground hover:bg-primary/90 font-medium tracking-wider uppercase text-sm px-8 transition-all duration-300"
       >
-        {loading ? "..." : "Начать учиться"}
+        {loading ? "..." : "Подписаться"}
       </Button>
       {error && <p className="text-red-400 text-sm w-full text-center">{error}</p>}
     </form>

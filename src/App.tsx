@@ -232,8 +232,7 @@ function HomePage() {
         <div className="max-w-3xl mx-auto relative z-10">
           <div className="text-center mb-12">
             <ArtDecoDivider variant="chevron" />
-            <p className="text-primary tracking-[0.2em] uppercase text-sm mb-4">Начни сегодня</p>
-            <h2 className="font-serif text-4xl md:text-5xl text-foreground mb-6 text-balance">Получи доступ к материалам</h2>
+            <h2 className="font-serif text-4xl md:text-5xl text-foreground mb-6 text-balance">Новости PythonСтарт</h2>
             <p className="text-muted-foreground text-lg max-w-xl mx-auto">
               Оставь e-mail — и мы будем присылать тебе новости про PythonСтарт.
             </p>
