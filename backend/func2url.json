@@ -1,4 +1,6 @@
 {
+  "admin-panel": "https://functions.poehali.dev/b048b876-35e0-4d0c-b783-9069d24606a9",
+  "check-password": "https://functions.poehali.dev/cb5c5ecd-77b5-43fb-abc5-3ac470d02811",
   "lava-webhook": "https://functions.poehali.dev/2c616dab-0dc8-499e-b180-7e036045f4d2",
   "lava-create-invoice": "https://functions.poehali.dev/91387253-f488-43fc-946e-2365c4b0729d",
   "subscribers-count": "https://functions.poehali.dev/2996483e-8588-416c-bee7-3462954a0fff",
