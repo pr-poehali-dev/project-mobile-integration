@@ -2,79 +2,192 @@ import { Navbar } from "@/components/Navbar";
 import { ArtDecoDivider } from "@/components/ArtDecoDivider";
 import Icon from "@/components/ui/icon";
 
-const topics = [
+interface Step {
+  label: string;
+  text: string;
+}
+
+interface Topic {
+  title: string;
+  icon: string;
+  intro: string;
+  steps?: Step[];
+  link?: string;
+  blocks: { label: string; code: string; comment?: string }[];
+}
+
+const topics: Topic[] = [
   {
     title: "Установка Python",
     icon: "Download",
-    text: "Скачай Python с python.org (ссылка ниже). Выбери версию 3.10+. После установки нажми Win+R, введи cmd и нажми Enter — откроется чёрное окно (командная строка). Вот туда и вводи команды ниже. Если видишь версию — всё готово! Важно: не вводи команды в IDLE или Python Shell — только в cmd!",
+    intro: "Python — это язык программирования. Его нужно установить на компьютер, как любую другую программу.",
     link: "https://www.python.org/downloads/",
-    code: `# На Windows:
-py --version
-# или
-python --version
-
-# На Mac / Linux:
-python3 --version
-
-# Пример ответа:
-# Python 3.11.0`,
+    steps: [
+      { label: "Шаг 1", text: "Нажми на кнопку ниже и скачай Python. При установке обязательно поставь галочку «Add Python to PATH» — иначе ничего не заработает." },
+      { label: "Шаг 2", text: "После установки нажми Win+R на клавиатуре, введи слово cmd и нажми Enter. Откроется чёрное окно — это командная строка." },
+      { label: "Шаг 3", text: "В командной строке введи команду и нажми Enter. Если в ответ появилась версия — Python установлен и готов к работе!" },
+    ],
+    blocks: [
+      {
+        label: "Вводишь в командной строке (cmd):",
+        code: "py --version",
+        comment: "Если py не работает, попробуй: python --version",
+      },
+      {
+        label: "Должно появиться:",
+        code: "Python 3.11.0",
+        comment: "Цифры могут отличаться — главное, что Python нашёлся",
+      },
+    ],
   },
   {
-    title: "Переменные и типы",
+    title: "Переменные и типы данных",
     icon: "Box",
-    text: "Переменные хранят данные. В Python тип определяется автоматически — не нужно его указывать вручную.",
-    code: `name = "Алексей"     # строка (str)
-age = 25              # целое число (int)
-height = 1.82         # дробное (float)
-is_student = True     # булево (bool)
+    intro: "Переменная — это как коробка с именем, в которой хранится значение. Python сам понимает, что ты туда положил — число, текст или что-то ещё.",
+    steps: [
+      { label: "Как это работает", text: "Пишешь имя переменной, знак = и значение. Всё. Python сам разберётся с типом." },
+      { label: "Типы данных", text: "Текст пишется в кавычках. Числа — просто числами. True/False — это да/нет (логическое значение)." },
+    ],
+    blocks: [
+      {
+        label: "Код — вводишь в Python (IDLE или файл .py):",
+        code: `name = "Алексей"   # текст — всегда в кавычках
+age = 25            # целое число
+height = 1.82       # дробное число (точка, не запятая!)
+is_student = True   # True = да, False = нет
 
-print(name, age)      # Алексей 25`,
+print(name)         # выводим на экран
+print(age)
+print(height)`,
+      },
+      {
+        label: "Результат на экране:",
+        code: `Алексей
+25
+1.82`,
+      },
+    ],
   },
   {
-    title: "Ввод и вывод",
+    title: "Ввод и вывод данных",
     icon: "Terminal",
-    text: "input() читает ввод пользователя, print() выводит на экран. Самые используемые функции в Python.",
-    code: `name = input("Как тебя зовут? ")
-print(f"Привет, {name}!")
-
-# f-строки позволяют вставлять переменные прямо в текст`,
+    intro: "Программа должна уметь общаться с пользователем: спрашивать и отвечать. Для этого есть две функции: input() и print().",
+    steps: [
+      { label: "print()", text: "Выводит любое значение на экран. Можешь передать туда текст, число или переменную." },
+      { label: "input()", text: "Задаёт вопрос пользователю и ждёт ответа. То, что введёт пользователь, сохраняется в переменную." },
+      { label: "f-строки", text: "Это удобный способ вставить переменную прямо в текст. Перед кавычками ставишь букву f, а переменную берёшь в фигурные скобки." },
+    ],
+    blocks: [
+      {
+        label: "Код:",
+        code: `name = input("Как тебя зовут? ")
+age = input("Сколько тебе лет? ")
+print(f"Привет, {name}! Тебе {age} лет.")`,
+      },
+      {
+        label: "Что видит пользователь:",
+        code: `Как тебя зовут? Алексей        ← пользователь вводит имя
+Сколько тебе лет? 25            ← пользователь вводит возраст
+Привет, Алексей! Тебе 25 лет.  ← программа отвечает`,
+      },
+    ],
   },
   {
-    title: "Условия (if/else)",
+    title: "Условия (if / else)",
     icon: "GitBranch",
-    text: "Условия управляют потоком программы. Python использует отступы вместо фигурных скобок.",
-    code: `age = 18
+    intro: "Условия позволяют программе принимать решения. Если что-то верно — делаем одно, иначе — другое. Как развилка на дороге.",
+    steps: [
+      { label: "if", text: "Проверяет условие. Если оно верно (True) — выполняется код внутри." },
+      { label: "elif", text: "Сокращение от «else if». Проверяет следующее условие, если предыдущее не сработало." },
+      { label: "else", text: "Выполняется если ни одно из условий выше не подошло. Это «на всякий случай»." },
+      { label: "Важно про отступы", text: "Python требует отступы (4 пробела или Tab) перед кодом внутри if. Без них — ошибка." },
+    ],
+    blocks: [
+      {
+        label: "Код:",
+        code: `age = 20
 
 if age >= 18:
-    print("Совершеннолетний")
+    print("Ты совершеннолетний")
 elif age >= 14:
-    print("Подросток")
+    print("Ты подросток")
 else:
-    print("Ребёнок")`,
+    print("Ты ребёнок")`,
+      },
+      {
+        label: "Результат (age = 20):",
+        code: "Ты совершеннолетний",
+        comment: "Попробуй поменять age на 15 или 10 — результат изменится",
+      },
+    ],
   },
   {
-    title: "Циклы",
+    title: "Циклы (for / while)",
     icon: "RefreshCw",
-    text: "for перебирает элементы, while повторяет пока условие истинно. Циклы — основа автоматизации.",
-    code: `# Цикл for
-for i in range(5):
-    print(i)   # 0 1 2 3 4
-
-# Цикл while
-count = 0
+    intro: "Цикл — это способ повторить одно и то же действие много раз. Без него пришлось бы писать print() сто раз подряд.",
+    steps: [
+      { label: "for", text: "Перебирает элементы по порядку. range(5) означает числа от 0 до 4 (5 чисел всего)." },
+      { label: "while", text: "Повторяет код пока условие верно. Следи чтобы условие когда-нибудь стало ложным — иначе цикл не остановится." },
+    ],
+    blocks: [
+      {
+        label: "Цикл for — выводим числа от 0 до 4:",
+        code: `for i in range(5):
+    print(i)`,
+      },
+      {
+        label: "Результат:",
+        code: `0
+1
+2
+3
+4`,
+        comment: "range(5) = числа 0, 1, 2, 3, 4 (не включая 5)",
+      },
+      {
+        label: "Цикл while — считаем до 3:",
+        code: `count = 0
 while count < 3:
-    print(count)
-    count += 1`,
+    print("Счёт:", count)
+    count += 1   # увеличиваем на 1, иначе будет бесконечный цикл`,
+      },
+      {
+        label: "Результат:",
+        code: `Счёт: 0
+Счёт: 1
+Счёт: 2`,
+      },
+    ],
   },
   {
     title: "Функции",
     icon: "Code2",
-    text: "Функция — блок кода с именем. Позволяет не повторяться и разбить программу на части.",
-    code: `def greet(name):
-    return f"Привет, {name}!"
+    intro: "Функция — это блок кода, которому дали имя. Один раз написал — используй сколько угодно раз. Это основа любой большой программы.",
+    steps: [
+      { label: "def", text: "Ключевое слово для создания функции. После него — имя функции и скобки." },
+      { label: "Параметры", text: "Это данные, которые передаёшь в функцию. Они пишутся в скобках." },
+      { label: "return", text: "Функция возвращает результат с помощью return. Этот результат можно сохранить в переменную." },
+    ],
+    blocks: [
+      {
+        label: "Создаём функцию приветствия:",
+        code: `def greet(name):
+    message = f"Привет, {name}! Рад тебя видеть."
+    return message
 
-result = greet("Мария")
-print(result)   # Привет, Мария!`,
+# Вызываем функцию с разными именами
+print(greet("Алексей"))
+print(greet("Мария"))
+print(greet("Иван"))`,
+      },
+      {
+        label: "Результат:",
+        code: `Привет, Алексей! Рад тебя видеть.
+Привет, Мария! Рад тебя видеть.
+Привет, Иван! Рад тебя видеть.`,
+        comment: "Написали функцию один раз — использовали три раза с разными именами",
+      },
+    ],
   },
 ];
 
@@ -94,7 +207,7 @@ export default function OsnovyPage() {
 
           <ArtDecoDivider variant="stepped" />
 
-          <div className="space-y-12 mt-12">
+          <div className="space-y-16 mt-12">
             {topics.map((topic) => (
               <div key={topic.title} className="relative p-8 bg-card border border-border">
                 <div className="absolute -top-2 -left-2 w-6 h-6 border-t-2 border-l-2 border-primary" />
@@ -105,9 +218,9 @@ export default function OsnovyPage() {
                   <h2 className="font-serif text-2xl text-foreground">{topic.title}</h2>
                 </div>
 
-                <p className="text-muted-foreground mb-4 leading-relaxed">{topic.text}</p>
+                <p className="text-muted-foreground mb-6 leading-relaxed text-base">{topic.intro}</p>
 
-                {"link" in topic && topic.link && (
+                {topic.link && (
                   <a
                     href={topic.link}
                     target="_blank"
@@ -119,9 +232,33 @@ export default function OsnovyPage() {
                   </a>
                 )}
 
-                <pre className="bg-background border border-border rounded-sm p-4 overflow-x-auto text-sm text-primary leading-relaxed">
-                  <code>{topic.code}</code>
-                </pre>
+                {topic.steps && (
+                  <div className="space-y-3 mb-6">
+                    {topic.steps.map((step) => (
+                      <div key={step.label} className="flex gap-3">
+                        <span className="text-primary text-xs font-semibold uppercase tracking-wider shrink-0 mt-1 w-16">{step.label}</span>
+                        <p className="text-muted-foreground text-sm leading-relaxed">{step.text}</p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                <div className="space-y-4">
+                  {topic.blocks.map((block, i) => (
+                    <div key={i}>
+                      <p className="text-xs text-primary/70 uppercase tracking-widest mb-2">{block.label}</p>
+                      <pre className="bg-background border border-border rounded-sm p-4 overflow-x-auto text-sm text-primary leading-relaxed">
+                        <code>{block.code}</code>
+                      </pre>
+                      {block.comment && (
+                        <p className="text-xs text-muted-foreground mt-2 flex items-center gap-1">
+                          <Icon name="Info" size={12} />
+                          {block.comment}
+                        </p>
+                      )}
+                    </div>
+                  ))}
+                </div>
               </div>
             ))}
           </div>
