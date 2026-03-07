@@ -74,7 +74,7 @@ export default function PaymentPage() {
                 <div className="absolute -bottom-2 -left-2 w-6 h-6 border-b-2 border-l-2 border-primary" />
                 <div className="absolute -bottom-2 -right-2 w-6 h-6 border-b-2 border-r-2 border-primary" />
                 <QRCodeSVG
-                  value={SBP_PHONE}
+                  value={`https://www.sberbank.com/sms/pbpn?requisiteNumber=${SBP_PHONE}`}
                   size={240}
                   bgColor="#ffffff"
                   fgColor="#000000"
