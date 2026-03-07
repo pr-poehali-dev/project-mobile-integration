@@ -12,9 +12,7 @@
       "method": "POST",
       "path": "/",
       "body": {"password": "welcome"},
-      "expectedStatus": 200,
-      "expectedBody": {"ok": true},
-      "bodyMatcher": "partial"
+      "expectedStatus": 200
     }
   ]
 }

@@ -3,6 +3,7 @@ import os
 import psycopg2
 
 
+
 def handler(event: dict, context) -> dict:
     """Проверяет пароль доступа к курсу через БД."""
     headers = {

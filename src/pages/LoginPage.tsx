@@ -3,16 +3,28 @@ import { useNavigate } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import Icon from "@/components/ui/icon";
 
-const PASSWORD = "welcome";
+const CHECK_PASSWORD_URL = "https://functions.poehali.dev/cb5c5ecd-77b5-43fb-abc5-3ac470d02811";
 
 export default function LoginPage() {
   const [value, setValue] = useState("");
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (value === PASSWORD) {
+    setLoading(true);
+    setError(false);
+
+    const res = await fetch(CHECK_PASSWORD_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ password: value }),
+    });
+
+    setLoading(false);
+
+    if (res.ok) {
       localStorage.setItem("python_start_paid", "true");
       navigate("/osnovy");
     } else {
@@ -56,10 +68,11 @@ export default function LoginPage() {
               </div>
               <button
                 type="submit"
-                className="w-full bg-primary text-primary-foreground hover:bg-primary/90 transition-colors px-6 py-3 font-semibold rounded-sm flex items-center justify-center gap-2"
+                disabled={loading}
+                className="w-full bg-primary text-primary-foreground hover:bg-primary/90 transition-colors px-6 py-3 font-semibold rounded-sm flex items-center justify-center gap-2 disabled:opacity-60"
               >
-                <Icon name="Unlock" size={16} />
-                Войти
+                <Icon name={loading ? "Loader" : "Unlock"} size={16} className={loading ? "animate-spin" : ""} />
+                {loading ? "Проверяю..." : "Войти"}
               </button>
             </form>
           </div>
