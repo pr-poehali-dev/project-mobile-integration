@@ -1,0 +1,11 @@
+{
+  "tests": [
+    {
+      "name": "Unauthorized",
+      "method": "POST",
+      "path": "/",
+      "body": {"subject": "Test", "text": "Hello"},
+      "expectedStatus": 401
+    }
+  ]
+}

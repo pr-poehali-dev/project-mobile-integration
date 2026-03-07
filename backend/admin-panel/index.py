@@ -46,6 +46,12 @@ def handler(event: dict, context) -> dict:
             for r in cur.fetchall()
         ]
 
+        cur.execute(f"SELECT id, email, created_at FROM {schema}.subscribers ORDER BY created_at DESC")
+        subscribers = [
+            {"id": r[0], "email": r[1], "created_at": r[2].strftime("%d.%m.%Y %H:%M")}
+            for r in cur.fetchall()
+        ]
+
         cur.execute(f"SELECT value FROM {schema}.settings WHERE key = 'course_password'")
         row = cur.fetchone()
         course_password = row[0] if row else "welcome"
@@ -56,6 +62,7 @@ def handler(event: dict, context) -> dict:
             "headers": HEADERS,
             "body": json.dumps({
                 "subscribers_count": subscribers_count,
+                "subscribers": subscribers,
                 "buyers": buyers,
                 "buyers_count": len(buyers),
                 "course_password": course_password,
