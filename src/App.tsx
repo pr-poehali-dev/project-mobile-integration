@@ -20,6 +20,7 @@ import ProektyPage from "@/pages/ProektyPage";
 import AdminPage from "@/pages/AdminPage";
 import PaymentPage from "@/pages/PaymentPage";
 import SuccessPage from "@/pages/SuccessPage";
+import LoginPage from "@/pages/LoginPage";
 import { Link } from "react-router-dom";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 
@@ -291,6 +292,7 @@ function App() {
       <Route path="/proekty" element={<ProtectedRoute><ProektyPage /></ProtectedRoute>} />
       <Route path="/admin" element={<AdminPage />} />
       <Route path="/payment" element={<PaymentPage />} />
+      <Route path="/login" element={<LoginPage />} />
       <Route path="/success" element={<SuccessPage />} />
     </Routes>
   );
