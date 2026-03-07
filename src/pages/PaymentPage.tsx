@@ -1,12 +1,8 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { QRCodeSVG } from "qrcode.react";
 import { Navbar } from "@/components/Navbar";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import Icon from "@/components/ui/icon";
-import func2url from "../../backend/func2url.json";
 
-const CREATE_INVOICE_URL = (func2url as Record<string, string>)["lava-create-invoice"];
+const SBP_PHONE = "79059623200";
 
 const features = [
   "8 полных разделов от основ до реальных проектов",
@@ -17,45 +13,6 @@ const features = [
 ];
 
 export default function PaymentPage() {
-  const [email, setEmail] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const navigate = useNavigate();
-
-  const searchParams = new URLSearchParams(window.location.search);
-  const hasError = searchParams.get("error") === "1";
-
-  async function handlePay(e: React.FormEvent) {
-    e.preventDefault();
-    setError("");
-
-    if (!email || !email.includes("@")) {
-      setError("Введи корректный email");
-      return;
-    }
-
-    setLoading(true);
-    try {
-      const res = await fetch(CREATE_INVOICE_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok || !data.paymentUrl) {
-        setError(data.error || "Произошла ошибка. Попробуй ещё раз.");
-        return;
-      }
-
-      window.location.href = data.paymentUrl;
-    } catch {
-      setError("Ошибка соединения. Проверь интернет и попробуй снова.");
-    } finally {
-      setLoading(false);
-    }
-  }
 
   return (
     <div className="min-h-screen bg-background dark">
@@ -105,70 +62,50 @@ export default function PaymentPage() {
               </div>
             </div>
 
-            <div className="bg-card border border-border rounded-lg p-8">
-              <h2 className="font-serif text-xl text-foreground mb-2">Оформить доступ</h2>
+            <div className="bg-card border border-border rounded-lg p-8 flex flex-col items-center text-center">
+              <h2 className="font-serif text-xl text-foreground mb-2">Оплата через СБП</h2>
               <p className="text-sm text-muted-foreground mb-6">
-                После оплаты ссылка придёт на твой email
+                Отсканируй QR-код или переведи по номеру телефона
               </p>
 
-              {hasError && (
-                <div className="flex items-center gap-2 p-3 bg-destructive/10 border border-destructive/20 rounded-md mb-4 text-sm text-destructive">
-                  <Icon name="AlertCircle" size={16} />
-                  <span>Оплата не прошла. Попробуй ещё раз.</span>
-                </div>
-              )}
-
-              <form onSubmit={handlePay} className="space-y-4">
-                <div>
-                  <label className="text-sm text-muted-foreground mb-2 block">Email для доступа</label>
-                  <Input
-                    type="email"
-                    placeholder="твой@email.ru"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    disabled={loading}
-                    className="bg-background"
-                  />
-                </div>
-
-                {error && (
-                  <p className="text-sm text-destructive flex items-center gap-1.5">
-                    <Icon name="AlertCircle" size={14} />
-                    {error}
-                  </p>
-                )}
-
-                <Button
-                  type="submit"
-                  className="w-full h-12 text-base font-semibold bg-primary text-primary-foreground hover:bg-primary/90"
-                  disabled={loading}
-                >
-                  {loading ? (
-                    <span className="flex items-center gap-2">
-                      <Icon name="Loader2" size={18} className="animate-spin" />
-                      Создаём платёж...
-                    </span>
-                  ) : (
-                    <span className="flex items-center gap-2">
-                      <Icon name="CreditCard" size={18} />
-                      Оплатить 500 ₽
-                    </span>
-                  )}
-                </Button>
-
-                <p className="text-xs text-muted-foreground text-center">
-                  Безопасная оплата через lava.top. Карты Visa, Mastercard, Мир, СБП.
-                </p>
-              </form>
-
-              <div className="flex items-center gap-4 mt-6 pt-6 border-t border-border">
-                {["lock", "shield-check", "badge-check"].map((icon, i) => (
-                  <div key={i} className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                    <Icon name={i === 0 ? "Lock" : i === 1 ? "ShieldCheck" : "BadgeCheck"} size={14} className="text-primary" />
-                    <span>{["Защищённый", "Безопасный", "Официальный"][i]}</span>
-                  </div>
-                ))}
+              <div className="relative inline-block p-4 bg-white border border-border">
+                <div className="absolute -top-2 -left-2 w-6 h-6 border-t-2 border-l-2 border-primary" />
+                <div className="absolute -top-2 -right-2 w-6 h-6 border-t-2 border-r-2 border-primary" />
+                <div className="absolute -bottom-2 -left-2 w-6 h-6 border-b-2 border-l-2 border-primary" />
+                <div className="absolute -bottom-2 -right-2 w-6 h-6 border-b-2 border-r-2 border-primary" />
+                <QRCodeSVG
+                  value={`https://qr.nspk.ru/phone/${SBP_PHONE}`}
+                  size={200}
+                  bgColor="#ffffff"
+                  fgColor="#1a1a2e"
+                  level="M"
+                />
               </div>
+
+              <div className="mt-6 flex items-center gap-2 text-foreground">
+                <Icon name="Smartphone" size={18} className="text-primary" />
+                <span className="font-medium tracking-widest text-lg">+7 905 962-32-00</span>
+              </div>
+              <p className="text-xs text-muted-foreground mt-1 mb-6">СБП — Система быстрых платежей</p>
+
+              <div className="w-full border-t border-border pt-6 text-left space-y-3">
+                <p className="text-primary tracking-[0.15em] uppercase text-xs font-medium">Как получить доступ</p>
+                <ol className="space-y-2 text-sm text-muted-foreground">
+                  <li className="flex gap-2"><span className="text-primary font-serif">1.</span><span>Переведи 500 ₽ через СБП по QR или номеру телефона</span></li>
+                  <li className="flex gap-2"><span className="text-primary font-serif">2.</span><span>В комментарии к переводу укажи свой email</span></li>
+                  <li className="flex gap-2"><span className="text-primary font-serif">3.</span><span>Напиши нам в Telegram — пришли скриншот и получи доступ</span></li>
+                </ol>
+              </div>
+
+              <a
+                href="https://t.me/+QgiLIa1gFRY4Y2Iy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-4 inline-flex items-center gap-2 bg-primary text-primary-foreground hover:bg-primary/90 transition-colors px-6 py-3 text-sm font-semibold rounded-sm w-full justify-center"
+              >
+                <Icon name="Send" size={16} />
+                Написать в Telegram
+              </a>
             </div>
 
           </div>
