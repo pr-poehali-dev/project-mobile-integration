@@ -6,9 +6,16 @@ const topics = [
   {
     title: "Установка Python",
     icon: "Download",
-    text: "Скачай Python с python.org. Выбери версию 3.10+. После установки проверь в терминале: python --version",
-    code: `# Проверка версии Python
+    text: "Скачай Python с python.org. Выбери версию 3.10+. После установки открой терминал (на Windows — cmd или PowerShell) и введи одну из команд ниже. Если видишь версию — всё готово!",
+    code: `# На Windows:
+py --version
+# или
 python --version
+
+# На Mac / Linux:
+python3 --version
+
+# Пример ответа:
 # Python 3.11.0`,
   },
   {
