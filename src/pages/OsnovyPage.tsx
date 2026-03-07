@@ -253,11 +253,13 @@ export default function OsnovyPage() {
 
                 {topic.image && (
                   <div className="mb-6">
-                    <img
-                      src={topic.image.src}
-                      alt={topic.image.caption}
-                      className="w-full rounded-sm border border-border"
-                    />
+                    <div className="border border-border rounded-sm overflow-hidden">
+                      <img
+                        src={topic.image.src}
+                        alt={topic.image.caption}
+                        className="w-full h-auto block"
+                      />
+                    </div>
                     <p className="text-xs text-muted-foreground mt-2 flex items-center gap-1">
                       <Icon name="Info" size={12} />
                       {topic.image.caption}
