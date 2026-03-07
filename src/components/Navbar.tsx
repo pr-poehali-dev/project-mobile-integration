@@ -16,6 +16,12 @@ const sections = [
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const location = useLocation();
+  const hasAccess = localStorage.getItem("python_start_paid") === "true";
+
+  const handleLogout = () => {
+    localStorage.removeItem("python_start_paid");
+    window.location.href = "/";
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur border-b border-border">
@@ -42,13 +48,23 @@ export function Navbar() {
           ))}
         </nav>
 
-        <Link
-          to="/login"
-          className="hidden lg:inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground border border-border hover:border-primary transition-colors px-3 py-1.5 rounded-sm"
-        >
-          <Icon name="LogIn" size={14} />
-          Войти
-        </Link>
+        {hasAccess ? (
+          <button
+            onClick={handleLogout}
+            className="hidden lg:inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground border border-border hover:border-primary transition-colors px-3 py-1.5 rounded-sm"
+          >
+            <Icon name="LogOut" size={14} />
+            Выйти
+          </button>
+        ) : (
+          <Link
+            to="/login"
+            className="hidden lg:inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground border border-border hover:border-primary transition-colors px-3 py-1.5 rounded-sm"
+          >
+            <Icon name="LogIn" size={14} />
+            Войти
+          </Link>
+        )}
 
         {/* Mobile burger */}
         <button
@@ -74,14 +90,24 @@ export function Navbar() {
               {s.label}
             </Link>
           ))}
-          <Link
-            to="/login"
-            onClick={() => setOpen(false)}
-            className="py-2 text-sm text-primary flex items-center gap-1.5"
-          >
-            <Icon name="LogIn" size={14} />
-            Войти
-          </Link>
+          {hasAccess ? (
+            <button
+              onClick={handleLogout}
+              className="py-2 text-sm text-muted-foreground flex items-center gap-1.5"
+            >
+              <Icon name="LogOut" size={14} />
+              Выйти
+            </button>
+          ) : (
+            <Link
+              to="/login"
+              onClick={() => setOpen(false)}
+              className="py-2 text-sm text-primary flex items-center gap-1.5"
+            >
+              <Icon name="LogIn" size={14} />
+              Войти
+            </Link>
+          )}
         </div>
       )}
     </header>
