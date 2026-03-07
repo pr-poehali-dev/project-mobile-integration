@@ -116,7 +116,7 @@ export default function PaymentPage() {
               </div>
 
               <a
-                href="https://t.me/+QgiLIa1gFRY4Y2Iy"
+                href="https://t.me/aur_bue"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-4 inline-flex items-center gap-2 bg-primary text-primary-foreground hover:bg-primary/90 transition-colors px-6 py-3 text-sm font-semibold rounded-sm w-full justify-center"
