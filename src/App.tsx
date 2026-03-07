@@ -235,7 +235,7 @@ function HomePage() {
             <p className="text-primary tracking-[0.2em] uppercase text-sm mb-4">Начни сегодня</p>
             <h2 className="font-serif text-4xl md:text-5xl text-foreground mb-6 text-balance">Получи доступ к материалам</h2>
             <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-              Оставь email — и мы пришлём тебе стартовый гайд «Первые 7 дней с Python» и сообщим о новых уроках первым.
+              Оставь e-mail — и мы будем присылать тебе новости про PythonСтарт.
             </p>
           </div>
 
