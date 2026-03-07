@@ -74,7 +74,7 @@ export default function PaymentPage() {
                 <div className="absolute -bottom-2 -left-2 w-6 h-6 border-b-2 border-l-2 border-primary" />
                 <div className="absolute -bottom-2 -right-2 w-6 h-6 border-b-2 border-r-2 border-primary" />
                 <QRCodeSVG
-                  value={`https://qr.nspk.ru/phone/${SBP_PHONE}?sum=50000&currency=RUB&purpose=PythonСтарт`}
+                  value={`tel:+${SBP_PHONE}`}
                   size={200}
                   bgColor="#ffffff"
                   fgColor="#1a1a2e"
