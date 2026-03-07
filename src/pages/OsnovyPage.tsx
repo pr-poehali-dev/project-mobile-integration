@@ -6,7 +6,8 @@ const topics = [
   {
     title: "Установка Python",
     icon: "Download",
-    text: "Скачай Python с python.org. Выбери версию 3.10+. После установки открой терминал (на Windows — cmd или PowerShell) и введи одну из команд ниже. Если видишь версию — всё готово!",
+    text: "Скачай Python с python.org (ссылка ниже). Выбери версию 3.10+. После установки открой терминал (на Windows — cmd или PowerShell) и введи одну из команд ниже. Если видишь версию — всё готово!",
+    link: "https://www.python.org/downloads/",
     code: `# На Windows:
 py --version
 # или
@@ -104,7 +105,19 @@ export default function OsnovyPage() {
                   <h2 className="font-serif text-2xl text-foreground">{topic.title}</h2>
                 </div>
 
-                <p className="text-muted-foreground mb-6 leading-relaxed">{topic.text}</p>
+                <p className="text-muted-foreground mb-4 leading-relaxed">{topic.text}</p>
+
+                {"link" in topic && topic.link && (
+                  <a
+                    href={topic.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-sm text-primary border border-primary/40 hover:border-primary hover:bg-primary/5 transition-colors px-4 py-2 rounded-sm mb-6"
+                  >
+                    <Icon name="ExternalLink" size={14} />
+                    Скачать Python с python.org
+                  </a>
+                )}
 
                 <pre className="bg-background border border-border rounded-sm p-4 overflow-x-auto text-sm text-primary leading-relaxed">
                   <code>{topic.code}</code>
