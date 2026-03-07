@@ -6,7 +6,7 @@ const topics = [
   {
     title: "Установка Python",
     icon: "Download",
-    text: "Скачай Python с python.org (ссылка ниже). Выбери версию 3.10+. После установки открой терминал (на Windows — cmd или PowerShell) и введи одну из команд ниже. Если видишь версию — всё готово!",
+    text: "Скачай Python с python.org (ссылка ниже). Выбери версию 3.10+. После установки нажми Win+R, введи cmd и нажми Enter — откроется чёрное окно (командная строка). Вот туда и вводи команды ниже. Если видишь версию — всё готово! Важно: не вводи команды в IDLE или Python Shell — только в cmd!",
     link: "https://www.python.org/downloads/",
     code: `# На Windows:
 py --version
