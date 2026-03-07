@@ -1,21 +1,32 @@
 import { Navbar } from "@/components/Navbar";
 import { ArtDecoDivider } from "@/components/ArtDecoDivider";
-import Icon from "@/components/ui/icon";
+import { SectionCard, SectionTopic } from "@/components/SectionCard";
+import { FileOpsChart, ScrapingFlowChart, TelegramBotChart } from "@/components/SectionCharts";
 
-const topics = [
+const topics: SectionTopic[] = [
   {
     title: "Работа с файлами",
     icon: "FolderOpen",
-    text: "Python легко читает, пишет и переименовывает файлы. Модуль os и pathlib делают это удобным.",
-    code: `import os
+    intro: "Python читает, пишет и управляет файлами через встроенные функции и модуль os. Конструкция with open() автоматически закрывает файл после работы — даже если произошла ошибка. Модуль pathlib предоставляет удобный объектный интерфейс к файловой системе.",
+    steps: [
+      { label: "open()", text: "Открывает файл для чтения ('r'), записи ('w') или добавления ('a'). Режим 'w' перезаписывает файл целиком. Режим 'a' добавляет в конец." },
+      { label: "with", text: "Конструкция with open(...) as f: гарантирует закрытие файла. Без with файл может остаться открытым при ошибке, что приведёт к утечке ресурсов." },
+      { label: "pathlib", text: "Path('.').iterdir() перебирает файлы в директории. Path('file.txt').exists() — проверить существование. Path('file.txt').read_text() — прочитать одной строкой." },
+    ],
+    visual: <FileOpsChart />,
+    blocks: [
+      {
+        label: "Чтение, запись, перебор файлов:",
+        code: `import os
 from pathlib import Path
 
 # Прочитать файл
 with open("notes.txt", "r", encoding="utf-8") as f:
     content = f.read()
+    print(content)
 
 # Записать файл
-with open("output.txt", "w") as f:
+with open("output.txt", "w", encoding="utf-8") as f:
     f.write("Готово!")
 
 # Список файлов в папке
@@ -24,16 +35,25 @@ for file in Path(".").iterdir():
 
 # Переименовать
 os.rename("old.txt", "new.txt")`,
+      },
+    ],
   },
   {
-    title: "Excel и Google Sheets",
+    title: "Excel и таблицы",
     icon: "Table",
-    text: "openpyxl читает и создаёт Excel-файлы. Автоматизируй отчёты и сэкономь часы ручной работы.",
-    code: `pip install openpyxl
+    intro: "Библиотека openpyxl позволяет читать и создавать Excel-файлы (.xlsx) прямо из Python. Это мощный инструмент для автоматизации отчётности: генерация прайс-листов, сводных таблиц, выгрузки данных — без запуска Excel.",
+    steps: [
+      { label: "Workbook", text: "openpyxl.Workbook() создаёт новую книгу. wb.active — активный лист. ws['A1'] = 'Данные' — запись в ячейку." },
+      { label: "append()", text: "ws.append([val1, val2, val3]) — добавить строку. Удобно для записи данных из списков или базы данных." },
+      { label: "Чтение", text: "openpyxl.load_workbook('file.xlsx') — открыть существующий файл. ws.iter_rows(values_only=True) — перебор строк с значениями." },
+    ],
+    blocks: [
+      {
+        label: "Создание Excel-отчёта:",
+        code: `pip install openpyxl
 
 import openpyxl
 
-# Создать Excel-файл
 wb = openpyxl.Workbook()
 ws = wb.active
 ws.title = "Отчёт"
@@ -42,20 +62,34 @@ ws["A1"] = "Имя"
 ws["B1"] = "Продажи"
 ws.append(["Иван", 150000])
 ws.append(["Анна", 230000])
+ws.append(["Олег", 180000])
 
 wb.save("report.xlsx")
-
-# Читать файл
-wb2 = openpyxl.load_workbook("data.xlsx")
+print("Файл сохранён")`,
+      },
+      {
+        label: "Чтение существующего файла:",
+        code: `wb2 = openpyxl.load_workbook("data.xlsx")
 ws2 = wb2.active
 for row in ws2.iter_rows(values_only=True):
-    print(row)`,
+    print(row)   # ('Иван', 150000)`,
+      },
+    ],
   },
   {
     title: "Парсинг сайтов",
     icon: "Globe",
-    text: "requests скачивает страницы, BeautifulSoup парсит HTML. Собирай данные с любых сайтов.",
-    code: `pip install requests beautifulsoup4
+    intro: "Парсинг (веб-скрапинг) — автоматический сбор данных с сайтов. Библиотека requests скачивает HTML-страницу, BeautifulSoup разбирает её структуру. Используется для сбора цен, новостей, вакансий и любых публичных данных.",
+    steps: [
+      { label: "requests", text: "requests.get(url) отправляет HTTP GET-запрос и возвращает ответ. response.text — текст страницы (HTML). response.status_code — код ответа (200 = OK)." },
+      { label: "BeautifulSoup", text: "BeautifulSoup(html, 'html.parser') разбирает HTML. soup.find('h1') — найти первый тег h1. soup.find_all('a') — все ссылки." },
+      { label: "Этика", text: "Проверяй файл robots.txt сайта перед парсингом. Делай паузы между запросами (time.sleep). Не перегружай серверы." },
+    ],
+    visual: <ScrapingFlowChart />,
+    blocks: [
+      {
+        label: "Парсинг заголовков и ссылок:",
+        code: `pip install requests beautifulsoup4
 
 import requests
 from bs4 import BeautifulSoup
@@ -69,19 +103,31 @@ title = soup.find("h1").text
 print(title)
 
 # Найти все ссылки
-links = soup.find_all("a")
-for link in links:
-    print(link.get("href"))`,
+for link in soup.find_all("a"):
+    href = link.get("href")
+    text = link.text.strip()
+    if href:
+        print(f"{text}: {href}")`,
+      },
+    ],
   },
   {
     title: "Отправка email",
     icon: "Mail",
-    text: "Python умеет отправлять письма через smtplib. Удобно для уведомлений, отчётов и оповещений.",
-    code: `import smtplib
+    intro: "Python умеет отправлять письма через модуль smtplib, используя любой SMTP-сервер (Gmail, Яндекс, корпоративный). Это полезно для автоматических уведомлений, отчётов по расписанию, подтверждений регистрации.",
+    steps: [
+      { label: "SMTP", text: "Simple Mail Transfer Protocol — стандартный протокол отправки почты. SMTP_SSL использует шифрование. Порт 465 — для Gmail с SSL." },
+      { label: "App Password", text: "Gmail требует «пароль приложения» (App Password) — не ваш основной пароль. Создаётся в настройках безопасности Google." },
+      { label: "MIMEText", text: "Объект MIMEText формирует письмо: тело, тема, отправитель, получатель. Для HTML-писем используй MIMEText(body, 'html')." },
+    ],
+    blocks: [
+      {
+        label: "Отправка письма через Gmail:",
+        code: `import smtplib
 from email.mime.text import MIMEText
 
 def send_email(to, subject, body):
-    msg = MIMEText(body)
+    msg = MIMEText(body, "plain", "utf-8")
     msg["Subject"] = subject
     msg["From"] = "bot@gmail.com"
     msg["To"] = to
@@ -89,40 +135,63 @@ def send_email(to, subject, body):
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
         server.login("bot@gmail.com", "APP_PASSWORD")
         server.sendmail("bot@gmail.com", to, msg.as_string())
+        print("Письмо отправлено!")
 
 send_email("user@mail.ru", "Отчёт готов", "Данные обновлены!")`,
+        comment: "APP_PASSWORD — пароль приложения из настроек Google, не ваш основной пароль",
+      },
+    ],
   },
   {
     title: "Расписание задач",
     icon: "Clock",
-    text: "schedule запускает функции по расписанию. Автозапуск скриптов каждый день, час или минуту.",
-    code: `pip install schedule
+    intro: "Библиотека schedule позволяет запускать функции по расписанию: каждую минуту, в определённое время, раз в день. Скрипт работает в бесконечном цикле и проверяет, не пора ли выполнить задачу. Альтернатива cron для простых случаев.",
+    steps: [
+      { label: "schedule", text: "schedule.every().day.at('09:00').do(fn) — запускать fn каждый день в 9:00. schedule.every(30).minutes.do(fn) — каждые 30 минут." },
+      { label: "run_pending()", text: "schedule.run_pending() проверяет, не пора ли выполнить задачи. Вызывается в цикле с небольшой паузой time.sleep(60)." },
+      { label: "Применение", text: "Автоматические отчёты, обновление данных, мониторинг цен, ежедневные резервные копии — всё это реализуется через schedule." },
+    ],
+    blocks: [
+      {
+        label: "Запуск задач по расписанию:",
+        code: `pip install schedule
 
 import schedule
 import time
 
 def morning_report():
     print("Генерирую утренний отчёт...")
-    # ... твой код
 
 def check_prices():
     print("Проверяю цены...")
 
-# Запускать каждый день в 9:00
+# Каждый день в 9:00
 schedule.every().day.at("09:00").do(morning_report)
 
 # Каждые 30 минут
 schedule.every(30).minutes.do(check_prices)
 
+# Основной цикл
 while True:
     schedule.run_pending()
-    time.sleep(60)`,
+    time.sleep(60)   # проверяем каждую минуту`,
+      },
+    ],
   },
   {
     title: "Телеграм-бот",
     icon: "MessageSquare",
-    text: "python-telegram-bot позволяет создать бота за 20 строк кода. Уведомления, команды, интерактивное меню.",
-    code: `pip install python-telegram-bot
+    intro: "python-telegram-bot — официальная библиотека для создания ботов. Бот регистрирует обработчики команд и сообщений, запускается в режиме polling (опрос Telegram API) и реагирует на входящие сообщения. Токен выдаёт @BotFather в Telegram.",
+    steps: [
+      { label: "BotFather", text: "Создай бота через @BotFather в Telegram: /newbot → придумай имя → получи токен. Токен — секрет, не публикуй в коде." },
+      { label: "CommandHandler", text: "CommandHandler('start', fn) — обработчик команды /start. fn принимает update (информация о сообщении) и context (вспомогательные данные)." },
+      { label: "reply_text", text: "update.message.reply_text('Текст') — отправить ответное сообщение. Функция асинхронная — нужно await." },
+    ],
+    visual: <TelegramBotChart />,
+    blocks: [
+      {
+        label: "Минимальный телеграм-бот:",
+        code: `pip install python-telegram-bot
 
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler
@@ -140,6 +209,9 @@ app = ApplicationBuilder().token("YOUR_TOKEN").build()
 app.add_handler(CommandHandler("start", start))
 app.add_handler(CommandHandler("hello", hello))
 app.run_polling()`,
+        comment: "Замените YOUR_TOKEN на токен от @BotFather",
+      },
+    ],
   },
 ];
 
@@ -156,27 +228,9 @@ export default function AvtomatizaciyaPage() {
               Пусть Python работает вместо тебя. Файлы, Excel, письма, парсинг и телеграм-боты — реальная польза.
             </p>
           </div>
-
           <ArtDecoDivider variant="stepped" />
-
           <div className="space-y-12 mt-12">
-            {topics.map((topic) => (
-              <div key={topic.title} className="relative p-8 bg-card border border-border">
-                <div className="absolute -top-2 -left-2 w-6 h-6 border-t-2 border-l-2 border-primary" />
-                <div className="absolute -bottom-2 -right-2 w-6 h-6 border-b-2 border-r-2 border-primary" />
-
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="text-primary"><Icon name={topic.icon} size={22} /></span>
-                  <h2 className="font-serif text-2xl text-foreground">{topic.title}</h2>
-                </div>
-
-                <p className="text-muted-foreground mb-6 leading-relaxed">{topic.text}</p>
-
-                <pre className="bg-background border border-border rounded-sm p-4 overflow-x-auto text-sm text-primary leading-relaxed">
-                  <code>{topic.code}</code>
-                </pre>
-              </div>
-            ))}
+            {topics.map((topic) => <SectionCard key={topic.title} topic={topic} />)}
           </div>
         </div>
       </main>
