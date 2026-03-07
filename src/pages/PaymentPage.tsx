@@ -82,7 +82,9 @@ export default function PaymentPage() {
                 />
               </div>
 
-              <div className="mt-6 flex items-center gap-2 text-foreground">
+              <p className="mt-4 text-sm text-muted-foreground">Введите сумму: <span className="text-foreground font-semibold">500 ₽</span></p>
+
+              <div className="mt-3 flex items-center gap-2 text-foreground">
                 <Icon name="Smartphone" size={18} className="text-primary" />
                 <span className="font-medium tracking-widest text-lg">+7 905 962-32-00</span>
               </div>
