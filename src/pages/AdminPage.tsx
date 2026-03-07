@@ -38,7 +38,7 @@ export default function AdminPage() {
   const fetchData = async (s: string) => {
     const res = await fetch(ADMIN_URL, { headers: { "X-Admin-Secret": s } });
     if (res.status === 401) return null;
-    const raw = await res.json();
+    const raw = await res.text();
     return JSON.parse(raw) as AdminData;
   };
 
