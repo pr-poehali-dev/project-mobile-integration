@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import Icon from "@/components/ui/icon";
 
 const ADMIN_URL = "https://functions.poehali.dev/b048b876-35e0-4d0c-b783-9069d24606a9";
+const NEWSLETTER_URL = "https://functions.poehali.dev/03754333-1cd5-4ba1-afa7-2ddf2bbe049e";
 
 interface Buyer {
   id: number;
@@ -14,8 +15,15 @@ interface Buyer {
   created_at: string;
 }
 
+interface Subscriber {
+  id: number;
+  email: string;
+  created_at: string;
+}
+
 interface AdminData {
   subscribers_count: number;
+  subscribers: Subscriber[];
   buyers: Buyer[];
   buyers_count: number;
   course_password: string;
@@ -34,6 +42,9 @@ export default function AdminPage() {
   const [newPassword, setNewPassword] = useState("");
   const [passwordSaved, setPasswordSaved] = useState(false);
   const [deletingId, setDeletingId] = useState<number | null>(null);
+  const [newsletter, setNewsletter] = useState({ subject: "", text: "" });
+  const [newsletterSending, setNewsletterSending] = useState(false);
+  const [newsletterResult, setNewsletterResult] = useState<{ sent: number; failed: number } | null>(null);
 
   const fetchData = async (s: string) => {
     const res = await fetch(ADMIN_URL, { headers: { "X-Admin-Secret": s } });
@@ -95,6 +106,23 @@ export default function AdminPage() {
     setNewPassword("");
     await handleRefresh();
     setTimeout(() => setPasswordSaved(false), 3000);
+  };
+
+  const handleSendNewsletter = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!confirm(`Отправить письмо всем ${data?.subscribers_count ?? 0} подписчикам?`)) return;
+    setNewsletterSending(true);
+    setNewsletterResult(null);
+    const res = await fetch(NEWSLETTER_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "X-Admin-Secret": secret },
+      body: JSON.stringify(newsletter),
+    });
+    const raw = await res.text();
+    const result = JSON.parse(raw);
+    setNewsletterResult({ sent: result.sent, failed: result.failed });
+    setNewsletterSending(false);
+    setNewsletter({ subject: "", text: "" });
   };
 
   if (!authed) {
@@ -260,10 +288,69 @@ export default function AdminPage() {
 
           {/* Подписчики */}
           {tab === "subscribers" && (
-            <div className="bg-card border border-border rounded-lg p-8 text-center">
-              <Icon name="Users" size={40} className="mx-auto mb-4 text-primary/40" />
-              <p className="text-4xl font-serif text-primary mb-2">{data?.subscribers_count ?? 0}</p>
-              <p className="text-muted-foreground">человек подписаны на рассылку</p>
+            <div className="space-y-6">
+              {/* Форма рассылки */}
+              <form onSubmit={handleSendNewsletter} className="bg-card border border-border rounded-lg p-6 space-y-3">
+                <p className="text-sm text-primary uppercase tracking-widest mb-2">Отправить письмо всем подписчикам</p>
+                <Input
+                  placeholder="Тема письма"
+                  value={newsletter.subject}
+                  onChange={(e) => setNewsletter({ ...newsletter, subject: e.target.value })}
+                  required
+                  className="bg-background border-border text-foreground"
+                />
+                <textarea
+                  placeholder="Текст письма..."
+                  value={newsletter.text}
+                  onChange={(e) => setNewsletter({ ...newsletter, text: e.target.value })}
+                  required
+                  rows={5}
+                  className="w-full bg-background border border-border rounded-sm px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors resize-none"
+                />
+                <div className="flex items-center gap-4">
+                  <Button type="submit" disabled={newsletterSending} className="bg-primary text-primary-foreground hover:bg-primary/90">
+                    <Icon name={newsletterSending ? "Loader" : "Send"} size={16} className={`mr-2 ${newsletterSending ? "animate-spin" : ""}`} />
+                    {newsletterSending ? "Отправляю..." : `Отправить ${data?.subscribers_count ?? 0} подписчикам`}
+                  </Button>
+                  {newsletterResult && (
+                    <p className="text-sm text-green-400 flex items-center gap-1">
+                      <Icon name="CheckCircle" size={14} />
+                      Отправлено: {newsletterResult.sent}, ошибок: {newsletterResult.failed}
+                    </p>
+                  )}
+                </div>
+              </form>
+
+              {/* Список подписчиков */}
+              <div className="relative border border-border bg-card">
+                <div className="absolute -top-2 -left-2 w-6 h-6 border-t-2 border-l-2 border-primary" />
+                <div className="absolute -bottom-2 -right-2 w-6 h-6 border-b-2 border-r-2 border-primary" />
+                {!data?.subscribers?.length ? (
+                  <div className="text-center py-16 text-muted-foreground">
+                    <Icon name="Mail" size={40} className="mx-auto mb-4 opacity-30" />
+                    <p>Подписчиков пока нет</p>
+                  </div>
+                ) : (
+                  <table className="w-full">
+                    <thead>
+                      <tr className="border-b border-border">
+                        <th className="text-left px-6 py-4 text-primary text-xs uppercase tracking-widest font-normal">#</th>
+                        <th className="text-left px-6 py-4 text-primary text-xs uppercase tracking-widest font-normal">Email</th>
+                        <th className="text-left px-6 py-4 text-primary text-xs uppercase tracking-widest font-normal">Дата</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {data.subscribers.map((s, i) => (
+                        <tr key={s.id} className="border-b border-border/40 last:border-0 hover:bg-primary/5 transition-colors">
+                          <td className="px-6 py-4 text-muted-foreground text-sm font-mono">{i + 1}</td>
+                          <td className="px-6 py-4 text-foreground">{s.email}</td>
+                          <td className="px-6 py-4 text-muted-foreground text-sm">{s.created_at}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
+              </div>
             </div>
           )}
 
