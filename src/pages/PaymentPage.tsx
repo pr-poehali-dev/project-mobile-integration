@@ -88,7 +88,23 @@ export default function PaymentPage() {
                 <Icon name="Smartphone" size={18} className="text-primary" />
                 <span className="font-medium tracking-widest text-lg">+7 905 962-32-00</span>
               </div>
-              <p className="text-xs text-muted-foreground mt-1 mb-6">СБП — Система быстрых платежей</p>
+              <p className="text-xs text-muted-foreground mt-1 mb-4">СБП — Система быстрых платежей</p>
+
+              <div className="w-full bg-muted/30 rounded-lg p-4 text-left space-y-2 mb-2">
+                <p className="text-xs text-primary uppercase tracking-widest font-medium mb-3">Как оплатить</p>
+                <div className="flex gap-3 text-sm text-muted-foreground">
+                  <span className="text-primary font-semibold shrink-0">1.</span>
+                  <span>Открой приложение своего банка и выбери «Оплата по QR» или «СБП»</span>
+                </div>
+                <div className="flex gap-3 text-sm text-muted-foreground">
+                  <span className="text-primary font-semibold shrink-0">2.</span>
+                  <span>Отсканируй QR-код — банк сам определит номер получателя</span>
+                </div>
+                <div className="flex gap-3 text-sm text-muted-foreground">
+                  <span className="text-primary font-semibold shrink-0">3.</span>
+                  <span>Введи сумму <strong className="text-foreground">500 ₽</strong> и подтверди перевод</span>
+                </div>
+              </div>
 
               <div className="w-full border-t border-border pt-6 text-left space-y-3">
                 <p className="text-primary tracking-[0.15em] uppercase text-xs font-medium">Как получить доступ</p>
