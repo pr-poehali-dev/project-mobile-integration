@@ -7,6 +7,7 @@ import {
   ConditionsChart,
   LoopsChart,
   FunctionsChart,
+  IDLEChart,
 } from "@/components/osnovy/TopicCharts";
 
 export interface Step {
@@ -21,7 +22,7 @@ export interface Topic {
   steps?: Step[];
   link?: string;
   image?: { src: string; caption: string };
-  visual?: "structure" | "interpreter" | "variables" | "io" | "conditions" | "loops" | "functions";
+  visual?: "structure" | "interpreter" | "variables" | "io" | "conditions" | "loops" | "functions" | "idle";
   blocks: { label: string; code: string; comment?: string }[];
 }
 
@@ -68,6 +69,7 @@ export function TopicCard({ topic }: { topic: Topic }) {
       {topic.visual === "conditions" && <ConditionsChart />}
       {topic.visual === "loops" && <LoopsChart />}
       {topic.visual === "functions" && <FunctionsChart />}
+      {topic.visual === "idle" && <IDLEChart />}
 
       {topic.image && (
         <div className="mb-6">

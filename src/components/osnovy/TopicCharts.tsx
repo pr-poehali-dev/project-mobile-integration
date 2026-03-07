@@ -359,3 +359,71 @@ export function FunctionsChart() {
     </div>
   );
 }
+
+export function IDLEChart() {
+  return (
+    <div className="mb-6">
+      <p className="text-xs text-primary/70 uppercase tracking-widest mb-4">Два режима IDLE: Shell и редактор файлов</p>
+      <div className="grid sm:grid-cols-2 gap-4 mb-3">
+        <div className="border border-border rounded-sm p-4 bg-background">
+          <div className="flex items-center gap-2 mb-3">
+            <div className="w-2 h-2 rounded-full bg-yellow-400" />
+            <p className="text-xs text-yellow-400 font-semibold uppercase tracking-wider">Shell — интерактивный режим</p>
+          </div>
+          <div className="font-mono text-xs bg-background border border-border rounded-sm p-3 flex flex-col gap-1">
+            <div className="text-muted-foreground">Python 3.11.0 (Shell)</div>
+            <div className="flex gap-1">
+              <span className="text-primary/50">&gt;&gt;&gt;</span>
+              <span className="text-primary">print("Привет")</span>
+            </div>
+            <div className="text-green-400">Привет</div>
+            <div className="flex gap-1">
+              <span className="text-primary/50">&gt;&gt;&gt;</span>
+              <span className="text-primary">2 + 2</span>
+            </div>
+            <div className="text-green-400">4</div>
+            <div className="flex gap-1">
+              <span className="text-primary/50">&gt;&gt;&gt;</span>
+              <span className="text-primary/30 animate-pulse">|</span>
+            </div>
+          </div>
+          <p className="text-xs text-muted-foreground mt-2">Одна строка → мгновенный результат.<br/>Для проверки отдельных команд.</p>
+        </div>
+
+        <div className="border border-border rounded-sm p-4 bg-background">
+          <div className="flex items-center gap-2 mb-3">
+            <div className="w-2 h-2 rounded-full bg-primary" />
+            <p className="text-xs text-primary font-semibold uppercase tracking-wider">Файл .py — редактор</p>
+          </div>
+          <div className="font-mono text-xs bg-background border border-border rounded-sm p-3 flex flex-col gap-1">
+            <div className="text-muted-foreground border-b border-border pb-1 mb-1">my_program.py</div>
+            <div className="text-blue-400">name = input("Имя: ")</div>
+            <div className="text-blue-400">age = input("Возраст: ")</div>
+            <div className="text-primary">print(f"Привет, {"{name}"}!")</div>
+            <div className="text-primary">print(f"Тебе {"{age}"} лет")</div>
+          </div>
+          <p className="text-xs text-muted-foreground mt-2">Весь код сразу → запуск по F5.<br/>Для написания настоящих программ.</p>
+        </div>
+      </div>
+
+      <div className="border border-primary/20 bg-primary/3 rounded-sm p-3">
+        <div className="flex flex-col sm:flex-row gap-2 items-start sm:items-center">
+          <span className="text-xs text-primary/70 uppercase tracking-wider shrink-0">Порядок запуска:</span>
+          <div className="flex flex-wrap gap-2 items-center text-xs">
+            {["Открыть IDLE", "File → New File", "Написать код", "Нажать F5", "Результат в Shell"].map((step, i, arr) => (
+              <div key={step} className="flex items-center gap-2">
+                <span className="border border-primary/30 bg-primary/5 text-primary px-2 py-1 rounded-sm font-mono">{step}</span>
+                {i < arr.length - 1 && <Icon name="ChevronRight" size={12} className="text-primary/30" />}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <p className="text-xs text-muted-foreground mt-3 flex items-center gap-1">
+        <Icon name="Info" size={12} />
+        Правило: код пишется в файле — результат отображается в Shell.
+      </p>
+    </div>
+  );
+}
