@@ -116,6 +116,252 @@ function InterpreterFlowChart() {
   );
 }
 
+function VariablesChart() {
+  const types = [
+    { type: "str", example: '"Алексей"', desc: "Текст (строка)", color: "border-blue-500/40 bg-blue-500/5 text-blue-400" },
+    { type: "int", example: "25", desc: "Целое число", color: "border-green-500/40 bg-green-500/5 text-green-400" },
+    { type: "float", example: "1.82", desc: "Дробное число", color: "border-yellow-500/40 bg-yellow-500/5 text-yellow-400" },
+    { type: "bool", example: "True / False", desc: "Истина или ложь", color: "border-purple-500/40 bg-purple-500/5 text-purple-400" },
+  ];
+  return (
+    <div className="mb-6">
+      <p className="text-xs text-primary/70 uppercase tracking-widest mb-4">Типы данных и оперативная память</p>
+      <div className="border border-border rounded-sm p-4 bg-background mb-3">
+        <p className="text-xs text-muted-foreground mb-3 font-mono">name = "Алексей" <span className="text-primary/40"># переменная → значение → тип</span></p>
+        <div className="flex flex-col sm:flex-row gap-2 items-start sm:items-center mb-4">
+          <div className="border border-primary/40 bg-primary/5 rounded-sm px-3 py-2 text-xs font-mono text-primary">name</div>
+          <div className="flex items-center gap-1 text-primary/40 text-xs">
+            <div className="w-8 h-px bg-primary/30 hidden sm:block" />
+            <span>=</span>
+            <div className="w-8 h-px bg-primary/30 hidden sm:block" />
+          </div>
+          <div className="border border-blue-500/40 bg-blue-500/5 rounded-sm px-3 py-2 text-xs font-mono text-blue-400">"Алексей"</div>
+          <div className="flex items-center gap-1 text-primary/40 text-xs">
+            <div className="w-4 h-px bg-primary/30 hidden sm:block" />
+            <span className="text-primary/40">тип:</span>
+          </div>
+          <div className="border border-blue-500/60 bg-blue-500/10 rounded-sm px-3 py-2 text-xs font-semibold text-blue-400">str</div>
+        </div>
+      </div>
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+        {types.map(t => (
+          <div key={t.type} className={`border rounded-sm p-3 flex flex-col gap-1 ${t.color}`}>
+            <span className="font-mono font-bold text-sm">{t.type}</span>
+            <span className="font-mono text-xs opacity-70">{t.example}</span>
+            <span className="text-xs opacity-60 leading-tight">{t.desc}</span>
+          </div>
+        ))}
+      </div>
+      <p className="text-xs text-muted-foreground mt-3 flex items-center gap-1">
+        <Icon name="Info" size={12} />
+        Python определяет тип автоматически — явно указывать его не требуется.
+      </p>
+    </div>
+  );
+}
+
+function IOFlowChart() {
+  return (
+    <div className="mb-6">
+      <p className="text-xs text-primary/70 uppercase tracking-widest mb-4">Схема взаимодействия программы с пользователем</p>
+      <div className="grid sm:grid-cols-2 gap-4">
+        <div className="border border-border rounded-sm p-4 bg-background">
+          <p className="text-xs text-primary/70 uppercase tracking-widest mb-3">input() — ввод</p>
+          <div className="flex flex-col gap-2">
+            <div className="border border-primary/30 bg-primary/5 rounded-sm px-3 py-2 text-xs text-center text-primary/80">Пользователь вводит данные</div>
+            <div className="flex justify-center"><div className="w-px h-3 bg-primary/30" /><Icon name="ChevronDown" size={12} className="text-primary/40 -mt-1" /></div>
+            <div className="border border-primary/40 bg-primary/10 rounded-sm px-3 py-2 text-xs font-mono text-center text-primary">input("Как тебя зовут? ")</div>
+            <div className="flex justify-center"><div className="w-px h-3 bg-primary/30" /><Icon name="ChevronDown" size={12} className="text-primary/40 -mt-1" /></div>
+            <div className="border border-green-500/40 bg-green-500/5 rounded-sm px-3 py-2 text-xs font-mono text-center text-green-400">name = "Алексей" <span className="opacity-60">(str)</span></div>
+          </div>
+        </div>
+        <div className="border border-border rounded-sm p-4 bg-background">
+          <p className="text-xs text-primary/70 uppercase tracking-widest mb-3">print() — вывод</p>
+          <div className="flex flex-col gap-2">
+            <div className="border border-green-500/40 bg-green-500/5 rounded-sm px-3 py-2 text-xs font-mono text-center text-green-400">name = "Алексей"</div>
+            <div className="flex justify-center"><div className="w-px h-3 bg-primary/30" /><Icon name="ChevronDown" size={12} className="text-primary/40 -mt-1" /></div>
+            <div className="border border-primary/40 bg-primary/10 rounded-sm px-3 py-2 text-xs font-mono text-center text-primary">print(f"Привет, {"{name}"}!")</div>
+            <div className="flex justify-center"><div className="w-px h-3 bg-primary/30" /><Icon name="ChevronDown" size={12} className="text-primary/40 -mt-1" /></div>
+            <div className="border border-primary/30 bg-primary/5 rounded-sm px-3 py-2 text-xs text-center text-primary/80">Экран: Привет, Алексей!</div>
+          </div>
+        </div>
+      </div>
+      <p className="text-xs text-muted-foreground mt-3 flex items-center gap-1">
+        <Icon name="Info" size={12} />
+        input() всегда возвращает строку (str). Для работы с числами требуется явное преобразование: int(input(...))
+      </p>
+    </div>
+  );
+}
+
+function ConditionsChart() {
+  return (
+    <div className="mb-6">
+      <p className="text-xs text-primary/70 uppercase tracking-widest mb-4">Дерево принятия решений (if / elif / else)</p>
+      <div className="border border-border rounded-sm p-4 bg-background">
+        <div className="flex flex-col items-center gap-0">
+          <div className="border border-primary/50 bg-primary/10 rounded-sm px-4 py-2 text-xs font-mono text-primary">age = 20</div>
+          <div className="w-px h-4 bg-primary/30" />
+          <div className="border-2 border-primary bg-primary/15 rounded-sm px-4 py-2 text-xs font-mono text-primary font-bold">if age &gt;= 18 ?</div>
+          <div className="flex items-start gap-8 sm:gap-16 mt-0">
+            <div className="flex flex-col items-center">
+              <div className="flex flex-col items-center">
+                <div className="w-px h-4 bg-green-500/50" />
+                <span className="text-xs text-green-400 font-semibold">True</span>
+                <div className="w-px h-3 bg-green-500/50" />
+              </div>
+              <div className="border border-green-500/40 bg-green-500/5 rounded-sm px-3 py-2 text-xs text-green-400 text-center">"Совершеннолетний"</div>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className="flex flex-col items-center">
+                <div className="w-px h-4 bg-red-500/50" />
+                <span className="text-xs text-red-400 font-semibold">False</span>
+                <div className="w-px h-3 bg-red-500/50" />
+              </div>
+              <div className="border-2 border-yellow-500/50 bg-yellow-500/10 rounded-sm px-3 py-2 text-xs text-yellow-400 text-center font-bold">elif age &gt;= 14 ?</div>
+              <div className="flex items-start gap-4 mt-0">
+                <div className="flex flex-col items-center">
+                  <div className="w-px h-3 bg-green-500/50" />
+                  <span className="text-xs text-green-400 font-semibold">True</span>
+                  <div className="w-px h-3 bg-green-500/50" />
+                  <div className="border border-green-500/40 bg-green-500/5 rounded-sm px-2 py-1 text-xs text-green-400">"Подросток"</div>
+                </div>
+                <div className="flex flex-col items-center">
+                  <div className="w-px h-3 bg-red-500/50" />
+                  <span className="text-xs text-red-400 font-semibold">False</span>
+                  <div className="w-px h-3 bg-red-500/50" />
+                  <div className="border border-primary/30 bg-primary/5 rounded-sm px-2 py-1 text-xs text-primary/60">else: "Ребёнок"</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p className="text-xs text-muted-foreground mt-3 flex items-center gap-1">
+        <Icon name="Info" size={12} />
+        Как только одна ветка срабатывает — остальные не проверяются. Порядок условий имеет значение.
+      </p>
+    </div>
+  );
+}
+
+function LoopsChart() {
+  return (
+    <div className="mb-6">
+      <p className="text-xs text-primary/70 uppercase tracking-widest mb-4">Схема работы циклов for и while</p>
+      <div className="grid sm:grid-cols-2 gap-4">
+        <div className="border border-border rounded-sm p-4 bg-background">
+          <p className="text-xs text-primary/60 uppercase tracking-widest mb-3 font-semibold">for — перебор</p>
+          <div className="flex flex-col items-center gap-0">
+            <div className="border border-primary/40 bg-primary/5 rounded-sm px-3 py-2 text-xs font-mono text-primary w-full text-center">range(5) → [0,1,2,3,4]</div>
+            <div className="w-px h-3 bg-primary/30" />
+            <div className="border-2 border-primary/60 bg-primary/10 rounded-sm px-3 py-2 text-xs font-mono text-primary w-full text-center font-bold">i = следующий элемент</div>
+            <div className="flex gap-6">
+              <div className="flex flex-col items-center">
+                <div className="w-px h-3 bg-green-500/50" />
+                <span className="text-xs text-green-400">есть</span>
+                <div className="w-px h-3 bg-green-500/50" />
+                <div className="border border-green-500/30 bg-green-500/5 rounded-sm px-2 py-1 text-xs text-green-400 text-center">print(i)</div>
+                <div className="text-xs text-primary/40 mt-1">↑ повтор</div>
+              </div>
+              <div className="flex flex-col items-center">
+                <div className="w-px h-3 bg-red-500/50" />
+                <span className="text-xs text-red-400">нет</span>
+                <div className="w-px h-3 bg-red-500/50" />
+                <div className="border border-primary/30 bg-primary/5 rounded-sm px-2 py-1 text-xs text-primary/60">стоп</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="border border-border rounded-sm p-4 bg-background">
+          <p className="text-xs text-primary/60 uppercase tracking-widest mb-3 font-semibold">while — условие</p>
+          <div className="flex flex-col items-center gap-0">
+            <div className="border border-primary/40 bg-primary/5 rounded-sm px-3 py-2 text-xs font-mono text-primary w-full text-center">count = 0</div>
+            <div className="w-px h-3 bg-primary/30" />
+            <div className="border-2 border-primary/60 bg-primary/10 rounded-sm px-3 py-2 text-xs font-mono text-primary w-full text-center font-bold">count &lt; 3 ?</div>
+            <div className="flex gap-6">
+              <div className="flex flex-col items-center">
+                <div className="w-px h-3 bg-green-500/50" />
+                <span className="text-xs text-green-400">True</span>
+                <div className="w-px h-3 bg-green-500/50" />
+                <div className="border border-green-500/30 bg-green-500/5 rounded-sm px-2 py-1 text-xs text-green-400 text-center">print(count)<br/>count += 1</div>
+                <div className="text-xs text-primary/40 mt-1">↑ повтор</div>
+              </div>
+              <div className="flex flex-col items-center">
+                <div className="w-px h-3 bg-red-500/50" />
+                <span className="text-xs text-red-400">False</span>
+                <div className="w-px h-3 bg-red-500/50" />
+                <div className="border border-primary/30 bg-primary/5 rounded-sm px-2 py-1 text-xs text-primary/60">стоп</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p className="text-xs text-muted-foreground mt-3 flex items-center gap-1">
+        <Icon name="Info" size={12} />
+        В цикле while обязательно изменять переменную условия — иначе цикл никогда не завершится.
+      </p>
+    </div>
+  );
+}
+
+function FunctionsChart() {
+  return (
+    <div className="mb-6">
+      <p className="text-xs text-primary/70 uppercase tracking-widest mb-4">Анатомия функции и механизм вызова</p>
+      <div className="border border-border rounded-sm p-4 bg-background mb-3">
+        <div className="grid sm:grid-cols-2 gap-6">
+          <div>
+            <p className="text-xs text-primary/50 uppercase tracking-wider mb-2">Объявление (def)</p>
+            <div className="flex flex-col gap-1">
+              <div className="border border-primary/50 bg-primary/10 rounded-t-sm px-3 py-2 text-xs font-mono text-primary">
+                <span className="text-yellow-400">def</span> greet(<span className="text-blue-400">name</span>):
+              </div>
+              <div className="border-l border-r border-primary/20 bg-primary/3 px-3 py-2 text-xs font-mono text-primary/70 pl-6">
+                message = f"Привет, {"{name}"}!"
+              </div>
+              <div className="border border-primary/20 bg-primary/3 rounded-b-sm px-3 py-2 text-xs font-mono text-primary/70 pl-6">
+                <span className="text-green-400">return</span> message
+              </div>
+            </div>
+            <div className="mt-2 flex flex-col gap-1">
+              <div className="flex items-center gap-2 text-xs">
+                <span className="text-yellow-400 font-mono font-bold">def</span>
+                <span className="text-muted-foreground">— объявление функции</span>
+              </div>
+              <div className="flex items-center gap-2 text-xs">
+                <span className="text-blue-400 font-mono font-bold">name</span>
+                <span className="text-muted-foreground">— параметр (входные данные)</span>
+              </div>
+              <div className="flex items-center gap-2 text-xs">
+                <span className="text-green-400 font-mono font-bold">return</span>
+                <span className="text-muted-foreground">— возвращаемое значение</span>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p className="text-xs text-primary/50 uppercase tracking-wider mb-2">Вызов (3 раза)</p>
+            <div className="flex flex-col gap-2">
+              {["Алексей", "Мария", "Иван"].map((name) => (
+                <div key={name} className="flex items-center gap-2">
+                  <div className="border border-primary/30 bg-primary/5 rounded-sm px-2 py-1 text-xs font-mono text-primary shrink-0">greet("{name}")</div>
+                  <Icon name="ArrowRight" size={12} className="text-primary/30 shrink-0" />
+                  <div className="border border-green-500/30 bg-green-500/5 rounded-sm px-2 py-1 text-xs text-green-400">Привет, {name}!</div>
+                </div>
+              ))}
+            </div>
+            <p className="text-xs text-muted-foreground mt-3">Функция написана <span className="text-primary">1 раз</span>, вызвана <span className="text-primary">3 раза</span> — принцип DRY</p>
+          </div>
+        </div>
+      </div>
+      <p className="text-xs text-muted-foreground flex items-center gap-1">
+        <Icon name="Info" size={12} />
+        Объявление функции не выполняет её. Код внутри выполняется только при вызове по имени.
+      </p>
+    </div>
+  );
+}
+
 interface Step {
   label: string;
   text: string;
@@ -128,7 +374,7 @@ interface Topic {
   steps?: Step[];
   link?: string;
   image?: { src: string; caption: string };
-  visual?: "structure" | "interpreter";
+  visual?: "structure" | "interpreter" | "variables" | "io" | "conditions" | "loops" | "functions";
   blocks: { label: string; code: string; comment?: string }[];
 }
 
@@ -227,6 +473,7 @@ const topics: Topic[] = [
       { label: "Тип int и float", text: "int — целое число (25, 0, -10). float — число с дробной частью (1.82, 3.14). Важно: дробная часть отделяется точкой, а не запятой — в соответствии со стандартом IEEE 754." },
       { label: "Тип bool", text: "Булев тип принимает только два значения: True (истина) или False (ложь). Используется в логических выражениях, условиях и циклах. Именно на сравнении булевых значений строится вся логика программы." },
     ],
+    visual: "variables",
     blocks: [
       {
         label: "Код — вводишь в Python (IDLE или файл .py):",
@@ -257,6 +504,7 @@ print(height)`,
       { label: "f-строки (f-strings)", text: "Форматированные строковые литералы — механизм подстановки значений переменных непосредственно в строку. Обозначаются префиксом f перед кавычками. Переменная или выражение для подстановки заключается в фигурные скобки {}." },
       { label: "Где { } на клавиатуре", text: "Фигурные скобки вводятся в английской раскладке: Shift + [ — открывающая {, Shift + ] — закрывающая }. Убедитесь, что раскладка переключена на английскую перед вводом." },
     ],
+    visual: "io",
     blocks: [
       {
         label: "Код:",
@@ -282,6 +530,7 @@ print(f"Привет, {name}! Тебе {age} лет.")`,
       { label: "Оператор else", text: "Исполняется в том случае, если ни одно из предшествующих условий (if и elif) не оказалось истинным. Представляет собой ветку «по умолчанию»." },
       { label: "Отступы (indentation)", text: "В Python отступы — это не стилистический выбор, а синтаксическое требование. Вложенный блок кода должен иметь отступ в 4 пробела относительно оператора if. Нарушение этого правила вызывает ошибку IndentationError." },
     ],
+    visual: "conditions",
     blocks: [
       {
         label: "Код:",
@@ -309,6 +558,7 @@ else:
       { label: "Цикл for", text: "Цикл с перебором — итерирует по заданной последовательности элементов. Функция range(n) генерирует последовательность целых чисел от 0 до n-1. На каждой итерации переменная-счётчик принимает следующее значение из последовательности." },
       { label: "Цикл while", text: "Цикл с предусловием — выполняет блок инструкций до тех пор, пока логическое выражение остаётся истинным (True). Условие проверяется перед каждой итерацией. Необходимо обеспечить, чтобы условие в конечном счёте стало ложным — иначе возникнет бесконечный цикл." },
     ],
+    visual: "loops",
     blocks: [
       {
         label: "Цикл for — выводим числа от 0 до 4:",
@@ -348,6 +598,7 @@ while count < 3:
       { label: "Параметры", text: "Параметры — это переменные, перечисленные в скобках при объявлении функции. При вызове функции в них передаются конкретные значения (аргументы). Параметры позволяют функции работать с различными входными данными." },
       { label: "Оператор return", text: "Оператор return завершает выполнение функции и возвращает указанное значение в место вызова. Возвращённое значение можно присвоить переменной или использовать в выражении. Функция без return возвращает значение None." },
     ],
+    visual: "functions",
     blocks: [
       {
         label: "Создаём функцию приветствия:",
@@ -425,6 +676,11 @@ export default function OsnovyPage() {
 
                 {topic.visual === "structure" && <ProgramStructureChart />}
                 {topic.visual === "interpreter" && <InterpreterFlowChart />}
+                {topic.visual === "variables" && <VariablesChart />}
+                {topic.visual === "io" && <IOFlowChart />}
+                {topic.visual === "conditions" && <ConditionsChart />}
+                {topic.visual === "loops" && <LoopsChart />}
+                {topic.visual === "functions" && <FunctionsChart />}
 
                 {topic.image && (
                   <div className="mb-6">
