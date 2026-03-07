@@ -13,6 +13,7 @@ interface Topic {
   intro: string;
   steps?: Step[];
   link?: string;
+  image?: { src: string; caption: string };
   blocks: { label: string; code: string; comment?: string }[];
 }
 
@@ -29,6 +30,10 @@ const topics: Topic[] = [
       { label: "Где писать код", text: "В IDLE есть два режима. Консоль (Shell) — строка за строкой, туда нельзя вставить несколько строк сразу. Файл — можно писать сколько угодно строк. Чтобы открыть файл: в IDLE нажми File → New File, вставь код, нажми Run → Run Module (или F5)." },
       { label: "Ошибка в IDLE", text: "Если видишь «SyntaxError: multiple statements» — ты пытаешься вставить несколько строк в консоль. Используй файл (File → New File), а не консоль Shell." },
     ],
+    image: {
+      src: "https://cdn.poehali.dev/projects/666d9b98-6923-4f3e-b58d-40ebbc224eb7/files/81371a1b-0d74-44b3-9c6e-dc6168e5b405.jpg",
+      caption: "Слева — файл с кодом, справа — Shell (консоль). Код пиши в файле, запускай через F5.",
+    },
     blocks: [
       {
         label: "Вводишь в командной строке (cmd):",
@@ -243,6 +248,20 @@ export default function OsnovyPage() {
                         <p className="text-muted-foreground text-sm leading-relaxed">{step.text}</p>
                       </div>
                     ))}
+                  </div>
+                )}
+
+                {topic.image && (
+                  <div className="mb-6">
+                    <img
+                      src={topic.image.src}
+                      alt={topic.image.caption}
+                      className="w-full rounded-sm border border-border"
+                    />
+                    <p className="text-xs text-muted-foreground mt-2 flex items-center gap-1">
+                      <Icon name="Info" size={12} />
+                      {topic.image.caption}
+                    </p>
                   </div>
                 )}
 
