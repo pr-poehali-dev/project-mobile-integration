@@ -122,7 +122,7 @@ export default function PaymentPage() {
                 className="mt-4 inline-flex items-center gap-2 bg-primary text-primary-foreground hover:bg-primary/90 transition-colors px-6 py-3 text-sm font-semibold rounded-sm w-full justify-center"
               >
                 <Icon name="Send" size={16} />
-                Написать в Telegram
+                После оплаты скинь мне скриншот в Telegram
               </a>
             </div>
 
