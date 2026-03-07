@@ -74,11 +74,11 @@ export default function PaymentPage() {
                 <div className="absolute -bottom-2 -left-2 w-6 h-6 border-b-2 border-l-2 border-primary" />
                 <div className="absolute -bottom-2 -right-2 w-6 h-6 border-b-2 border-r-2 border-primary" />
                 <QRCodeSVG
-                  value={`+${SBP_PHONE}`}
-                  size={200}
+                  value={SBP_PHONE}
+                  size={240}
                   bgColor="#ffffff"
-                  fgColor="#1a1a2e"
-                  level="M"
+                  fgColor="#000000"
+                  level="H"
                 />
               </div>
 
