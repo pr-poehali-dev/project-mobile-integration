@@ -21,6 +21,7 @@ import AdminPage from "@/pages/AdminPage";
 import PaymentPage from "@/pages/PaymentPage";
 import SuccessPage from "@/pages/SuccessPage";
 import LoginPage from "@/pages/LoginPage";
+import DecoderPage from "@/pages/DecoderPage";
 import { Link } from "react-router-dom";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 
@@ -293,6 +294,7 @@ function App() {
       <Route path="/payment" element={<PaymentPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/success" element={<SuccessPage />} />
+      <Route path="/decoder" element={<DecoderPage />} />
     </Routes>
   );
 }

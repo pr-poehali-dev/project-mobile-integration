@@ -48,23 +48,37 @@ export function Navbar() {
           ))}
         </nav>
 
-        {hasAccess ? (
-          <button
-            onClick={handleLogout}
-            className="hidden lg:inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground border border-border hover:border-primary transition-colors px-3 py-1.5 rounded-sm"
-          >
-            <Icon name="LogOut" size={14} />
-            Выйти
-          </button>
-        ) : (
+        <div className="hidden lg:flex items-center gap-2">
           <Link
-            to="/login"
-            className="hidden lg:inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground border border-border hover:border-primary transition-colors px-3 py-1.5 rounded-sm"
+            to="/decoder"
+            className={`inline-flex items-center gap-1.5 text-sm transition-colors px-3 py-1.5 rounded-sm border ${
+              location.pathname === "/decoder"
+                ? "border-primary text-primary bg-primary/10"
+                : "border-primary/40 text-primary hover:bg-primary/10"
+            }`}
           >
-            <Icon name="LogIn" size={14} />
-            Войти
+            <Icon name="Sparkles" size={14} />
+            Дешифратор
           </Link>
-        )}
+
+          {hasAccess ? (
+            <button
+              onClick={handleLogout}
+              className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground border border-border hover:border-primary transition-colors px-3 py-1.5 rounded-sm"
+            >
+              <Icon name="LogOut" size={14} />
+              Выйти
+            </button>
+          ) : (
+            <Link
+              to="/login"
+              className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground border border-border hover:border-primary transition-colors px-3 py-1.5 rounded-sm"
+            >
+              <Icon name="LogIn" size={14} />
+              Войти
+            </Link>
+          )}
+        </div>
 
         {/* Mobile burger */}
         <button
@@ -90,6 +104,16 @@ export function Navbar() {
               {s.label}
             </Link>
           ))}
+          <Link
+            to="/decoder"
+            onClick={() => setOpen(false)}
+            className={`py-2 text-sm flex items-center gap-1.5 border-b border-border/40 ${
+              location.pathname === "/decoder" ? "text-primary" : "text-primary/70 hover:text-primary"
+            }`}
+          >
+            <Icon name="Sparkles" size={14} />
+            Дешифратор кода
+          </Link>
           {hasAccess ? (
             <button
               onClick={handleLogout}
